@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthServiceImp implements AuthService{
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public AuthServiceImp(UserRepository userRepository) {
@@ -26,10 +26,10 @@ public class AuthServiceImp implements AuthService{
         user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
         User createdUser = userRepository.save(user);
 
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(createdUser.getId());
-        userDTO.setEmail(createdUser.getEmail());
-        userDTO.setName(createdUser.getName());
-        return userDTO;
+        return UserDTO.builder()
+                                    .id(createdUser.getId())
+                                    .email(createdUser.getEmail())
+                                    .name(createdUser.getName())
+                                    .build();
     }
 }

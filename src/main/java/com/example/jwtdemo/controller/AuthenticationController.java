@@ -18,8 +18,8 @@ import java.io.IOException;
 
 @RestController
 public class AuthenticationController {
-    private AuthenticationManager authenticationManager;
-    private UserDetailsService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
     public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {

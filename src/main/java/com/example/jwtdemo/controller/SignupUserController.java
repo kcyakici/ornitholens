@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SignupUserController {
-    private AuthService authService;
+    private final AuthService authService;
 
     @Autowired
     public SignupUserController(AuthService authService) {
