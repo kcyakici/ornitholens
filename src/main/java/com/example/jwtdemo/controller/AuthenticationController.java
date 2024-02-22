@@ -2,6 +2,7 @@ package com.example.jwtdemo.controller;
 
 import com.example.jwtdemo.dto.AuthenticationRequest;
 import com.example.jwtdemo.dto.AuthenticationResponse;
+import com.example.jwtdemo.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,12 +22,16 @@ import java.io.IOException;
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
+    private JwtUtil jwtUtil;
 
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
+        this.jwtUtil = jwtUtil;
     }
+
+    @PostMapping("/authentication")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
                                                             HttpServletResponse httpServletResponse)
     throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
@@ -38,7 +44,8 @@ public class AuthenticationController {
             return null;
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
-        final String jwt =
+        final String jwt = jwtUtil.generateToken(userDetails.getUsername());
+        return new AuthenticationResponse(jwt);
     }
 
 }

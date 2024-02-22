@@ -1,12 +1,5 @@
 package com.example.jwtdemo.dto;
 
-import lombok.Builder;
-import lombok.Value;
+public record UserDTO(Long id, String email, String name) {
 
-@Value
-@Builder
-public class UserDTO {
-    private Long id;
-    private String name;
-    private String email;
 }
