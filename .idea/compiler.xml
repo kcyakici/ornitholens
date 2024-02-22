@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jwt-demo" />
+        <module name="OrnithoLens" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="OrnithoLens" options="-parameters" />
       <module name="jwt-demo" options="-parameters" />
     </option>
   </component>

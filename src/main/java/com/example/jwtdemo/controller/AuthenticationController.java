@@ -31,7 +31,7 @@ public class AuthenticationController {
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/authentication")
+    @PostMapping("/authenticate")
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
                                                             HttpServletResponse httpServletResponse)
     throws BadCredentialsException, DisabledException, UsernameNotFoundException, IOException {
