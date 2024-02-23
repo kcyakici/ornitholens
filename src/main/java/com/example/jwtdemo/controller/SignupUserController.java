@@ -2,7 +2,6 @@ package com.example.jwtdemo.controller;
 
 import com.example.jwtdemo.dto.SignupRequest;
 import com.example.jwtdemo.dto.UserDTO;
-import com.example.jwtdemo.entity.User;
 import com.example.jwtdemo.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

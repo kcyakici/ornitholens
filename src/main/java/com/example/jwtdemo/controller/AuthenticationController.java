@@ -22,7 +22,7 @@ import java.io.IOException;
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     @Autowired
     public AuthenticationController(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, JwtUtil jwtUtil) {
