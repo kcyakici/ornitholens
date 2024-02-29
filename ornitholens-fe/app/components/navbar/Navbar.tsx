@@ -1,23 +1,38 @@
-'use client'
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import RegisterModal from './RegisterModal';
+"use client";
+import React from "react";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import RegisterModal from "./RegisterModal";
+import LoginModal from "./LoginModal";
+import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
 
-export default function ButtonAppBar() {
-  const [isRegisterModalOpen, setRegisterModalOpen] = React.useState(false);
+export default function Navbar() {
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = React.useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
+  const { isContextLoggedIn, contextLogin, contextLogout } = useAuth(); // Access the authentication context
+
   const handleRegisterModalOpen = () => {
-    setRegisterModalOpen(true);
+    setIsRegisterModalOpen(true);
   };
 
   const handleRegisterModalClose = () => {
-    setRegisterModalOpen(false);
-  }
+    setIsRegisterModalOpen(false);
+  };
+
+  const handleLoginModalOpen = () => {
+    setIsLoginModalOpen(true);
+  };
+
+  const handleLoginModalClose = () => {
+    setIsLoginModalOpen(false);
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -35,11 +50,29 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <Button color="inherit" onClick={handleRegisterModalOpen}>Register</Button>
-          <Button color="inherit">Login</Button>
+          {isContextLoggedIn ? (
+            <>
+              <Button color="inherit" onClick={contextLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" onClick={handleRegisterModalOpen}>
+                Register
+              </Button>
+              <Button color="inherit" onClick={handleLoginModalOpen}>
+                Login
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
-      <RegisterModal open={isRegisterModalOpen} handleClose={handleRegisterModalClose}/>
+      <RegisterModal
+        open={isRegisterModalOpen}
+        handleClose={handleRegisterModalClose}
+      />
+      <LoginModal open={isLoginModalOpen} handleClose={handleLoginModalClose} />
     </Box>
   );
 }

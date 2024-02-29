@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import isEmailValid from "@/app/utils/IsEmailValid";
 
 const style = {
   position: "absolute" as "absolute",
@@ -35,7 +36,7 @@ export default function RegisterModal({
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setEmail(value);
-    validateEmail(value);
+    isEmailValid(value) ? setEmailError(false) : setEmailError(true);
   };
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,13 +70,6 @@ export default function RegisterModal({
       // Optionally, you can display an error message or handle invalid form data
       console.log("Invalid form data");
     }
-  };
-
-  const validateEmail = (email: string): void => {
-    // Regular expression for validating email addresses
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const isValid = regex.test(email);
-    isValid ? setEmailError(false) : setEmailError(true);
   };
 
   //   const validatePassword = (password: string): void => {
