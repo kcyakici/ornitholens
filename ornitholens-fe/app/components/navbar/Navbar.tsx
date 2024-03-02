@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 import {
   AppBar,
   Box,
@@ -35,6 +36,9 @@ export default function Navbar() {
     setIsLoginModalOpen(false);
   };
 
+  console.log("Context log in state:" + isContextLoggedIn);
+  console.log("Navbar rendered");
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -56,6 +60,9 @@ export default function Navbar() {
               <Button color="inherit" onClick={contextLogout}>
                 Logout
               </Button>
+              <Link href="/community">
+                <Button color="inherit">Community</Button>
+              </Link>
               <Button color="inherit" onClick={() => testAuthentication(token)}>
                 Hello Check
                 {/* TODO: Remove */}
