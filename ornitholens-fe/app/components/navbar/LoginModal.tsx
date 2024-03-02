@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import loginHandler from "@/app/api/loginHandler";
+import { loginHandler } from "@/app/service/AxiosAuthService";
 import { useAuth } from "@/app/context/AuthContext";
 
 export const style = {
@@ -45,38 +45,11 @@ export default function RegisterModal({
 
   const handleSubmit = async () => {
     try {
-      // Call the loginHandler function to authenticate the user
-      await loginHandler(email, password, contextLogin);
-
-      // Optionally, you can perform actions after successful login
+      loginHandler(email, password, contextLogin);
       console.log("Login successful");
     } catch (error: any) {
-      // Handle any errors that occur during login
       console.error("Error logging in:", error.message);
-      // Optionally, display an error message to the user
     }
-
-    // if (!isEmailError) {
-    //   const registerEndpoint =
-    //     process.env.REGISTER_ENDPOINT ?? "http://localhost:8080/authenticate";
-    //   // Here you can perform your HTTP POST request with the email and password using Axios
-    //   axios
-    //     .post(registerEndpoint, {
-    //       email: email,
-    //       password: password,
-    //     })
-    //     .then((response) => {
-    //       console.log("Form submitted successfully:", response.data);
-    //       // Optionally, you can perform actions after successful form submission
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error submitting form:", error);
-    //       // Optionally, you can handle errors from the server
-    //     });
-    // } else {
-    //   // Optionally, you can display an error message or handle invalid form data
-    //   console.log("Invalid form data");
-    // }
   };
 
   return (

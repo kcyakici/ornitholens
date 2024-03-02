@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-import axios from "axios";
 import isEmailValid from "@/app/utils/IsEmailValid";
+import { registerHandler } from "@/app/service/AxiosAuthService";
 
 const style = {
   position: "absolute" as "absolute",
@@ -49,23 +49,7 @@ export default function RegisterModal({
 
   const handleSubmit = () => {
     if (!isEmailError) {
-      const registerEndpoint =
-        process.env.REGISTER_ENDPOINT ?? "http://localhost:8080/register";
-      // Here you can perform your HTTP POST request with the email and password using Axios
-      axios
-        .post(registerEndpoint, {
-          name: username,
-          email: email,
-          password: password,
-        })
-        .then((response) => {
-          console.log("Form submitted successfully:", response.data);
-          // Optionally, you can perform actions after successful form submission
-        })
-        .catch((error) => {
-          console.error("Error submitting form:", error);
-          // Optionally, you can handle errors from the server
-        });
+      registerHandler({ username, email, password });
     } else {
       // Optionally, you can display an error message or handle invalid form data
       console.log("Invalid form data");

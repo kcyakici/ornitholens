@@ -12,11 +12,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import RegisterModal from "./RegisterModal";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../../context/AuthContext"; // Import the useAuth hook
+import { testAuthentication } from "@/app/service/AxiosAuthService";
 
 export default function Navbar() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = React.useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
-  const { isContextLoggedIn, contextLogin, contextLogout } = useAuth(); // Access the authentication context
+  const { isContextLoggedIn, contextLogout, token } = useAuth(); // Access the authentication context
 
   const handleRegisterModalOpen = () => {
     setIsRegisterModalOpen(true);
@@ -54,6 +55,10 @@ export default function Navbar() {
             <>
               <Button color="inherit" onClick={contextLogout}>
                 Logout
+              </Button>
+              <Button color="inherit" onClick={() => testAuthentication(token)}>
+                Hello Check
+                {/* TODO: Remove */}
               </Button>
             </>
           ) : (
