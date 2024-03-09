@@ -18,23 +18,7 @@ import { testAuthentication } from "@/app/service/AxiosAuthService";
 export default function Navbar() {
   const [isRegisterModalOpen, setIsRegisterModalOpen] = React.useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
-  const { isContextLoggedIn, contextLogout, token } = useAuth(); // Access the authentication context
-
-  const handleRegisterModalOpen = () => {
-    setIsRegisterModalOpen(true);
-  };
-
-  const handleRegisterModalClose = () => {
-    setIsRegisterModalOpen(false);
-  };
-
-  const handleLoginModalOpen = () => {
-    setIsLoginModalOpen(true);
-  };
-
-  const handleLoginModalClose = () => {
-    setIsLoginModalOpen(false);
-  };
+  const { isContextLoggedIn, contextLogout, token } = useAuth();
 
   console.log("Context log in state:" + isContextLoggedIn);
   console.log("Navbar rendered");
@@ -70,10 +54,13 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Button color="inherit" onClick={handleRegisterModalOpen}>
+              <Button
+                color="inherit"
+                onClick={() => setIsRegisterModalOpen(true)}
+              >
                 Register
               </Button>
-              <Button color="inherit" onClick={handleLoginModalOpen}>
+              <Button color="inherit" onClick={() => setIsLoginModalOpen(true)}>
                 Login
               </Button>
             </>
@@ -82,9 +69,12 @@ export default function Navbar() {
       </AppBar>
       <RegisterModal
         open={isRegisterModalOpen}
-        handleClose={handleRegisterModalClose}
+        handleClose={() => setIsRegisterModalOpen(false)}
       />
-      <LoginModal open={isLoginModalOpen} handleClose={handleLoginModalClose} />
+      <LoginModal
+        open={isLoginModalOpen}
+        handleClose={() => setIsLoginModalOpen(false)}
+      />
     </Box>
   );
 }
