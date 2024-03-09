@@ -1,6 +1,7 @@
 "use server";
 import React from "react";
-import ForumThreadCard from "../components/ForumThreadCard"; // Assuming you have ForumThreadCard component
+import ForumThreadCard from "../components/ForumThreadCard";
+import Link from "next/link";
 
 const CommunityPage: React.FC = () => {
   const handleClick = (id: number) => {};
@@ -37,12 +38,11 @@ const CommunityPage: React.FC = () => {
         {forumThreads.map((thread) => (
           <ForumThreadCard
             key={thread.id}
-            id={thread.id}
+            threadId={thread.id}
             title={thread.title}
             lastReplied={thread.lastReplied}
             openedBy={thread.openedBy}
             openedTime={thread.openedTime}
-            handleClick={() => handleClick(thread.id)}
           />
         ))}
       </div>

@@ -3,6 +3,7 @@ import React from "react";
 import { Theme } from "@mui/material/styles";
 // import { makeStyles } from "@mui/system/styles"; // Import makeStyles from @mui/system/styles
 import { Card, CardContent, Typography, Avatar } from "@mui/material";
+import Link from "next/link";
 
 // const useStyles = makeStyles((theme: Theme) => ({
 //   card: {
@@ -14,7 +15,7 @@ import { Card, CardContent, Typography, Avatar } from "@mui/material";
 // }));
 
 type ForumThreadCardProps = {
-  id: number;
+  threadId: number;
   title: string;
   lastReplied: string;
   openedBy: string;
@@ -23,7 +24,7 @@ type ForumThreadCardProps = {
 };
 
 const ForumThreadCard = ({
-  id,
+  threadId,
   title,
   lastReplied,
   openedBy,
@@ -38,9 +39,11 @@ ForumThreadCardProps) => {
     // onClick={handleClick}
     >
       <CardContent>
-        <Typography variant="h5" component="h2">
-          {title}
-        </Typography>
+        <Link href={`/community/thread/${threadId}`} passHref>
+          <Typography variant="h5" component="h2">
+            {title}
+          </Typography>
+        </Link>
         <Typography variant="body2" color="textSecondary" gutterBottom>
           Last replied: {lastReplied}
         </Typography>
