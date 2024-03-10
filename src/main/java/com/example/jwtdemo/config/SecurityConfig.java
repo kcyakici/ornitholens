@@ -4,6 +4,7 @@ import com.example.jwtdemo.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -40,7 +41,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/register", "/authenticate").permitAll()
-                                .requestMatchers("/api/**").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/threads").authenticated()
+                                .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
                 .sessionManagement((sessionManagement) ->
@@ -49,7 +51,7 @@ public class SecurityConfig {
                                         .maximumSessions(1)
                                         .expiredUrl("/login?expired")))
                 .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // for jwt
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

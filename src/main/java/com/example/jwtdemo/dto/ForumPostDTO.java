@@ -1,5 +1,8 @@
 package com.example.jwtdemo.dto;
 import com.example.jwtdemo.entity.User;
 
-public record ForumPostDTO(Long id, String content, User user) {
+import java.time.LocalDateTime;
+
+// TODO research DTO use cases and the line when it is overused
+public record ForumPostDTO(Long id, String content, LocalDateTime time, User user) {
 }

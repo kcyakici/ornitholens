@@ -1,10 +1,8 @@
 "use server";
 import React from "react";
 import ForumThreadCard from "../components/ForumThreadCard";
-import Link from "next/link";
 
 const CommunityPage: React.FC = () => {
-  const handleClick = (id: number) => {};
   // Mock data for forum threads
   const forumThreads = [
     {
@@ -34,7 +32,6 @@ const CommunityPage: React.FC = () => {
     <div>
       <h1>Community Page</h1>
       <div>
-        {/* Render ForumThreadCards for each thread */}
         {forumThreads.map((thread) => (
           <ForumThreadCard
             key={thread.id}
@@ -51,27 +48,3 @@ const CommunityPage: React.FC = () => {
 };
 
 export default CommunityPage;
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-
-// const CommunityPage: React.FC = () => {
-//   //   const [threads, setThreads] = useState([]);
-
-//   //   useEffect(() => {
-//   //     fetchData();
-//   //   }, []);
-
-//   //   const fetchData = async () => {
-//   //     try {
-//   //       const response = await axios.get("/api/threads");
-//   //       setThreads(response.data);
-//   //     } catch (error) {
-//   //       console.error("Error fetching data:", error);
-//   //     }
-//   //   };
-
-//   return <div>You are in Community</div>;
-// };
-
-// export default CommunityPage;

@@ -20,8 +20,8 @@ export default function Navbar() {
   const [isLoginModalOpen, setIsLoginModalOpen] = React.useState(false);
   const { isContextLoggedIn, contextLogout, token } = useAuth();
 
-  console.log("Context log in state:" + isContextLoggedIn);
-  console.log("Navbar rendered");
+  console.log("Context log in state:" + isContextLoggedIn); // TODO delete
+  console.log("Navbar rendered"); // TODO delete
 
   return (
     <Box sx={{ flexGrow: 1 }}>
