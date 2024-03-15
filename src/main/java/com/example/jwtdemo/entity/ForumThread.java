@@ -3,7 +3,9 @@ package com.example.jwtdemo.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "threads")
@@ -17,7 +19,7 @@ public class ForumThread {
     @Column(name = "create_time")
     private LocalDateTime time;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "thread_id", nullable = false)
+    @JoinColumn(name = "thread_id")
     private List<ForumPost> forumPostList;
 
     public ForumThread() {
@@ -27,6 +29,17 @@ public class ForumThread {
         this.title = title;
         this.time = time;
         this.forumPostList = forumPostList;
+    }
+
+    public void addPost(ForumPost forumPost) {
+        if (forumPostList == null)
+            forumPostList = new ArrayList<>();
+
+        forumPostList.add(forumPost);
+    }
+
+    public void removePost(ForumPost forumPost) {
+        forumPostList.remove(forumPost);
     }
 
     public Long getId() {
@@ -59,6 +72,18 @@ public class ForumThread {
 
     public void setForumPostList(List<ForumPost> forumPostList) {
         this.forumPostList = forumPostList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ForumThread that)) return false;
+        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(time, that.time) && Objects.equals(forumPostList, that.forumPostList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, time, forumPostList);
     }
 
     @Override

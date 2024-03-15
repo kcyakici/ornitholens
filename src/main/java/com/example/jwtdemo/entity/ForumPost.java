@@ -1,9 +1,9 @@
 package com.example.jwtdemo.entity;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "posts")
@@ -16,15 +16,15 @@ public class ForumPost {
     private String content;
     @Column(name = "create_time")
     private LocalDateTime time;
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private ForumMember forumMember;
 
     public ForumPost() {}
 
-    public ForumPost(String content, User user, LocalDateTime time) {
+    public ForumPost(String content, ForumMember forumMember, LocalDateTime time) {
         this.content = content;
-        this.user = user;
+        this.forumMember = forumMember;
         this.time = time;
     }
 
@@ -52,12 +52,24 @@ public class ForumPost {
         this.content = content;
     }
 
-    public User getUser() {
-        return user;
+    public ForumMember getForumMember() {
+        return forumMember;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setForumMember(ForumMember forumMember) {
+        this.forumMember = forumMember;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ForumPost forumPost)) return false;
+        return Objects.equals(id, forumPost.id) && Objects.equals(content, forumPost.content) && Objects.equals(time, forumPost.time) && Objects.equals(forumMember, forumPost.forumMember);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, time, forumMember);
     }
 
     @Override
@@ -65,7 +77,7 @@ public class ForumPost {
         return "ForumPost{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", user=" + user +
+                ", user=" + forumMember +
                 '}';
     }
 }

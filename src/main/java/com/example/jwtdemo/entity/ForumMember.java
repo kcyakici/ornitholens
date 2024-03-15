@@ -2,9 +2,11 @@ package com.example.jwtdemo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "users")
-public class User {
+public class ForumMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -16,10 +18,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public User() {
+    public ForumMember() {
     }
 
-    public User(String name, String email, String password) {
+    public ForumMember(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -55,6 +57,18 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ForumMember that)) return false;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, password);
     }
 
     public String toString() {

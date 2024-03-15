@@ -1,8 +1,9 @@
 package com.example.jwtdemo.service.jwt;
 
-import com.example.jwtdemo.entity.User;
-import com.example.jwtdemo.repository.UserRepository;
+import com.example.jwtdemo.entity.ForumMember;
+import com.example.jwtdemo.repository.ForumMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,18 +14,27 @@ import java.util.ArrayList;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final ForumMemberRepository forumMemberRepository;
 
     @Autowired
-    public UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserDetailsServiceImpl(ForumMemberRepository forumMemberRepository) {
+        this.forumMemberRepository = forumMemberRepository;
     }
+
+    public ForumMember findForumMemberByUsername(String email) {
+        return getForumMember(email);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findFirstByEmail(email);
-        if (user == null)
-            throw new UsernameNotFoundException("User not found", null);
+        ForumMember forumMember = getForumMember(email);
+        return new User(forumMember.getEmail(), forumMember.getPassword(), new ArrayList<>());
+    }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
+    private ForumMember getForumMember(String email) {
+        ForumMember forumMember = forumMemberRepository.findFirstByEmail(email);
+        if (forumMember == null)
+            throw new UsernameNotFoundException("User not found", null);
+        return forumMember;
     }
 }
