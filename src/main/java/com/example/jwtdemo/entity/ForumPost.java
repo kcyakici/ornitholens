@@ -64,12 +64,13 @@ public class ForumPost {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ForumPost forumPost)) return false;
-        return Objects.equals(id, forumPost.id) && Objects.equals(content, forumPost.content) && Objects.equals(time, forumPost.time) && Objects.equals(forumMember, forumPost.forumMember);
+
+        return Objects.equals(id, forumPost.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, content, time, forumMember);
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

@@ -78,12 +78,13 @@ public class ForumThread {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ForumThread that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(title, that.title) && Objects.equals(time, that.time) && Objects.equals(forumPostList, that.forumPostList);
+
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, time, forumPostList);
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

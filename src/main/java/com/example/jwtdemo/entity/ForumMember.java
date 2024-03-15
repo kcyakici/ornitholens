@@ -63,12 +63,13 @@ public class ForumMember {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ForumMember that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password);
+        return id != null ? id.hashCode() : 0;
     }
 
     public String toString() {
