@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const BASE_URL = "http://localhost:8080/";
 
@@ -73,4 +73,26 @@ export function testAuthentication(jwt: string) {
       console.error("Authenticaton test failed:", error);
       // Optionally, you can handle errors from the server
     });
+}
+
+export async function postForumThread(
+  jwt: string,
+  title: string,
+  content: string
+) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  const response: AxiosResponse = await axios.post(
+    BASE_URL + "threads",
+    {
+      title,
+      content,
+    },
+    config
+  );
+  return response;
 }

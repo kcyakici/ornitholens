@@ -1,8 +1,13 @@
-"use server";
+"use client";
 import React from "react";
-import ForumThreadCard from "../components/ForumThreadCard";
+import ForumThreadCard from "../components/forum/ForumThreadCard";
+import { Button } from "@mui/material";
+import Link from "next/link";
+import { useAuth } from "../context/AuthContext";
 
 const CommunityPage: React.FC = () => {
+  const { isContextLoggedIn } = useAuth();
+
   // Mock data for forum threads
   const forumThreads = [
     {
@@ -31,18 +36,25 @@ const CommunityPage: React.FC = () => {
   return (
     <div>
       <h1>Community Page</h1>
-      <div>
-        {forumThreads.map((thread) => (
-          <ForumThreadCard
-            key={thread.id}
-            threadId={thread.id}
-            title={thread.title}
-            lastReplied={thread.lastReplied}
-            openedBy={thread.openedBy}
-            openedTime={thread.openedTime}
-          />
-        ))}
-      </div>
+      {isContextLoggedIn ? (
+        <div>
+          <Link href={`/community/thread/post-thread`} passHref>
+            <Button>Post thread</Button>
+          </Link>
+        </div>
+      ) : (
+        <div></div>
+      )}
+      {forumThreads.map((thread) => (
+        <ForumThreadCard
+          key={thread.id}
+          threadId={thread.id}
+          title={thread.title}
+          lastReplied={thread.lastReplied}
+          openedBy={thread.openedBy}
+          openedTime={thread.openedTime}
+        />
+      ))}
     </div>
   );
 };

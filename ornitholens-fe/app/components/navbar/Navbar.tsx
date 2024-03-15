@@ -44,7 +44,7 @@ export default function Navbar() {
               <Button color="inherit" onClick={contextLogout}>
                 Logout
               </Button>
-              <Link href="/community">
+              <Link href="/community" passHref>
                 <Button color="inherit">Community</Button>
               </Link>
               <Button color="inherit" onClick={() => testAuthentication(token)}>
