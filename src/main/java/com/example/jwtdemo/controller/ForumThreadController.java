@@ -28,6 +28,7 @@ public class ForumThreadController {
         this.forumThreadService = forumThreadService;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
     }
+
     @GetMapping("/threads/{threadId}")
     public ResponseEntity<ForumThread> getForumThread(@PathVariable String threadId) {
         long threadIdLong = convertToLong(threadId);
@@ -36,7 +37,8 @@ public class ForumThreadController {
     }
 
     @PostMapping("/threads") // TODO make return type explicit
-    public ResponseEntity<?> createForumThread(@RequestBody ForumThreadCreationRequest forumThreadCreationRequest, @AuthenticationPrincipal User requestingUser) {
+    public ResponseEntity<?> createForumThread(@RequestBody ForumThreadCreationRequest forumThreadCreationRequest,
+            @AuthenticationPrincipal User requestingUser) {
         System.out.println("Class of user: " + requestingUser.getClass());
         System.out.println("Username of the requesting user: " + requestingUser.getUsername());
 
@@ -47,14 +49,15 @@ public class ForumThreadController {
         LocalDateTime now = LocalDateTime.now();
 
         ForumPost forumPost = new ForumPost(content, forumMember, now);
-        com.example.jwtdemo.entity.ForumThread forumThread = new com.example.jwtdemo.entity.ForumThread(title, now, List.of(forumPost));
+        ForumThread forumThread = new ForumThread(title, now, List.of(forumPost));
 
-        com.example.jwtdemo.entity.ForumThread savedForumThread = forumThreadService.saveForumThread(forumThread);
-        return new ResponseEntity<com.example.jwtdemo.entity.ForumThread>(forumThread, HttpStatus.CREATED);
+        ForumThread savedForumThread = forumThreadService.saveForumThread(forumThread);
+        return new ResponseEntity<ForumThread>(savedForumThread, HttpStatus.CREATED);
     }
 
     @PostMapping("/threads/posts")
-    public ResponseEntity<?> createForumPost(@RequestBody ForumPostCreationRequest forumPostCreationRequest, @AuthenticationPrincipal User requestingUser) {
+    public ResponseEntity<?> createForumPost(@RequestBody ForumPostCreationRequest forumPostCreationRequest,
+            @AuthenticationPrincipal User requestingUser) {
         String threadId = forumPostCreationRequest.threadId();
         long threadIdLong = convertToLong(threadId);
         String postContent = forumPostCreationRequest.content();
