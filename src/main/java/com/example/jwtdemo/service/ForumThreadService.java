@@ -1,11 +1,13 @@
 package com.example.jwtdemo.service;
 
+import com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO;
 import com.example.jwtdemo.entity.ForumThread;
 import com.example.jwtdemo.exception.ForumThreadNotFoundException;
 import com.example.jwtdemo.repository.ForumThreadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +17,11 @@ public class ForumThreadService {
     @Autowired
     public ForumThreadService(ForumThreadRepository forumThreadRepository) {
         this.forumThreadRepository = forumThreadRepository;
+    }
+
+    public List<ForumThreadWithoutPostsDTO> getAllForumThreadsExcludePosts() {
+        System.out.println("You are here: getAllForumThreadsWithoutPosts()" );
+        return forumThreadRepository.findForumThreadsExcludePosts();
     }
 
     public ForumThread getForumThread(Long id) {
@@ -35,8 +42,8 @@ public class ForumThreadService {
         }
     }
 
-    public com.example.jwtdemo.entity.ForumThread saveForumThread(com.example.jwtdemo.entity.ForumThread forumThread) {
-        com.example.jwtdemo.entity.ForumThread savedForumThread = forumThreadRepository.save(forumThread); // TODO don't return user details like password
+    public ForumThread saveForumThread(ForumThread forumThread) {
+        ForumThread savedForumThread = forumThreadRepository.save(forumThread); // TODO don't return user details like password
         System.out.println("Forum thread saved: " + savedForumThread); // TODO delete
         return savedForumThread;
     }

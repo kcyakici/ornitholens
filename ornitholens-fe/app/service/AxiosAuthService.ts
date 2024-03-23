@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { ForumThreadWithoutPosts } from "../types/types";
 
 const BASE_URL = "http://localhost:8080/";
 
@@ -10,7 +11,7 @@ const BASE_URL = "http://localhost:8080/";
 //   });
 // }
 
-export type Register = {
+type RegisterRequest = {
   username: string;
   email: string;
   password: string;
@@ -39,7 +40,11 @@ export function loginHandler(
   }
 }
 
-export function registerHandler({ username, email, password }: Register) {
+export function registerHandler({
+  username,
+  email,
+  password,
+}: RegisterRequest) {
   axios
     .post(BASE_URL + "register", {
       name: username,
@@ -115,6 +120,13 @@ export async function postForumPost(
       content,
     },
     config
+  );
+  return response;
+}
+
+export async function getForumThreads() {
+  const response: AxiosResponse<ForumThreadWithoutPosts[]> = await axios.get(
+    BASE_URL + "threads"
   );
   return response;
 }

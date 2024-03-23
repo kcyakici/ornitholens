@@ -41,6 +41,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeHttpRequests) ->
                         authorizeHttpRequests
                                 .requestMatchers("/register", "/authenticate").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/threads").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/threads").authenticated()
                                 .anyRequest().authenticated()
                 )

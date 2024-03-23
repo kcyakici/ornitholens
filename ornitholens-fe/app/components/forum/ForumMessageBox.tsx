@@ -40,7 +40,13 @@ export default function ForumMessageBox({
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
       <TextField
         id="outlined-multiline-static"
         label="Multiline"

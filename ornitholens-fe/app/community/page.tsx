@@ -4,9 +4,12 @@ import ForumThreadCard from "../components/forum/ForumThreadCard";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { useAuth } from "../context/AuthContext";
+import { getForumThreads } from "../service/AxiosAuthService";
 
 const CommunityPage: React.FC = () => {
   const { isContextLoggedIn } = useAuth();
+  const forumThreadsFromBackend = getForumThreads(); // TODO change name
+  console.log(forumThreadsFromBackend);
 
   // Mock data for forum threads
   const forumThreads = [

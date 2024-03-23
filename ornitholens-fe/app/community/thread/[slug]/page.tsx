@@ -1,6 +1,7 @@
 "use client";
 import ForumMessageBox from "@/app/components/forum/ForumMessageBox";
 import { useAuth } from "@/app/context/AuthContext";
+import { getForumThreads } from "@/app/service/AxiosAuthService";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { isContextLoggedIn } = useAuth();

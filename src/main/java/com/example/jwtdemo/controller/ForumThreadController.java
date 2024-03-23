@@ -2,6 +2,7 @@ package com.example.jwtdemo.controller;
 
 import com.example.jwtdemo.dto.ForumPostCreationRequest;
 import com.example.jwtdemo.dto.ForumThreadCreationRequest;
+import com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO;
 import com.example.jwtdemo.entity.ForumThread;
 import com.example.jwtdemo.entity.ForumMember;
 import com.example.jwtdemo.entity.ForumPost;
@@ -32,8 +33,14 @@ public class ForumThreadController {
     @GetMapping("/threads/{threadId}")
     public ResponseEntity<ForumThread> getForumThread(@PathVariable String threadId) {
         long threadIdLong = convertToLong(threadId);
-        ForumThread forumThread = forumThreadService.getForumThread(threadIdLong);
-        return new ResponseEntity<>(forumThread, HttpStatus.FOUND);
+        ForumThread forumThread = forumThreadService.getForumThreadJoinFetch(threadIdLong);
+        return new ResponseEntity<>(forumThread, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/threads")
+    public ResponseEntity<List<ForumThreadWithoutPostsDTO>> getThreadList() {
+        List<ForumThreadWithoutPostsDTO> forumThreadListWithoutPosts = forumThreadService.getAllForumThreadsExcludePosts();
+        return new ResponseEntity<>(forumThreadListWithoutPosts, HttpStatus.ACCEPTED);
     }
 
     @PostMapping("/threads") // TODO make return type explicit
