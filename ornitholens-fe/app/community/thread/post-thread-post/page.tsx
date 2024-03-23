@@ -5,16 +5,15 @@ import { postForumThread } from "@/app/service/AxiosAuthService";
 import { useAuth } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
 
-const PostThreadPage: React.FC = () => {
-  const [threadTitle, setThreadTitle] = useState("");
+type PostThreadPostPageProps = {
+  threadId: string;
+};
+
+function PostThreadPostPage({ threadId }: PostThreadPostPageProps) {
   const [threadContent, setThreadContent] = useState("");
   const [isPosting, setIsPosting] = useState(false);
   const { token } = useAuth();
   const router = useRouter();
-
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setThreadTitle(event.target.value);
-  };
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setThreadContent(event.target.value);
@@ -26,11 +25,11 @@ const PostThreadPage: React.FC = () => {
     setIsPosting(true); // Disable the button to prevent multiple requests
     try {
       console.log("You are here");
-      const response = await postForumThread(token, threadTitle, threadContent);
+      const response = await postForumThread(token, threadId, threadContent);
       console.log(response); // TODO remove
       router.push(`/community/thread/${response.data.id}`);
     } catch (error) {
-      console.error("Error while trying to create the thread: " + error);
+      console.error("Error while trying to created a thread: " + error);
     } finally {
       setIsPosting(false);
     }
@@ -46,14 +45,6 @@ const PostThreadPage: React.FC = () => {
           maxWidth: "70%",
         }}
       >
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Title"
-          variant="outlined"
-          value={threadTitle}
-          onChange={handleTitleChange}
-        />
         <TextField
           id="outlined-multiline-static"
           label="Multiline"
@@ -72,6 +63,6 @@ const PostThreadPage: React.FC = () => {
       </Box>
     </div>
   );
-};
+}
 
-export default PostThreadPage;
+export default PostThreadPostPage;

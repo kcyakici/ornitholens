@@ -96,3 +96,25 @@ export async function postForumThread(
   );
   return response;
 }
+
+export async function postForumPost(
+  jwt: string,
+  forumId: string,
+  content: string
+) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  const response: AxiosResponse = await axios.post(
+    BASE_URL + "threads/posts",
+    {
+      forumId,
+      content,
+    },
+    config
+  );
+  return response;
+}

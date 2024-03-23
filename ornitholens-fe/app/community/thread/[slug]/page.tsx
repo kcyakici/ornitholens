@@ -1,5 +1,16 @@
+"use client";
+import ForumMessageBox from "@/app/components/forum/ForumMessageBox";
+import { useAuth } from "@/app/context/AuthContext";
+
 export default function Page({ params }: { params: { slug: string } }) {
-  return <div>My Post: {params.slug}</div>;
+  const { isContextLoggedIn } = useAuth();
+
+  return (
+    <div>
+      My Post: {params.slug}
+      {isContextLoggedIn ? <ForumMessageBox threadId={params.slug} /> : null}
+    </div>
+  );
 }
 //   //   const [threads, setThreads] = useState([]);
 
