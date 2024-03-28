@@ -19,8 +19,6 @@ type UserPostProps = {
 };
 
 const UserPost = ({ username, postedAt, content }: UserPostProps) => {
-  //   const classes = useStyles();
-
   return (
     <Card
     // className={classes.card}

@@ -1,15 +1,25 @@
-"use client";
 import ForumMessageBox from "@/app/components/forum/ForumMessageBox";
+import UserPost from "@/app/components/forum/UserPost";
 import { useAuth } from "@/app/context/AuthContext";
-import { getForumThreads } from "@/app/service/AxiosAuthService";
+import { getForumThread } from "@/app/service/AxiosAuthService";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const { isContextLoggedIn } = useAuth();
-
+export default async function Page({ params }: { params: { slug: string } }) {
+  const id = params.slug;
+  console.log(id);
+  const forumThread = await getForumThread({ id });
+  const { data } = forumThread;
   return (
     <div>
-      My Post: {params.slug}
-      {isContextLoggedIn ? <ForumMessageBox threadId={params.slug} /> : null}
+      <h1>{data.title}</h1>
+      {data.forumPostList.map((forumPost) => (
+        <UserPost
+          key={forumPost.id}
+          username="Harcoded username"
+          postedAt={forumPost.time}
+          content={forumPost.content}
+        />
+      ))}
+      <ForumMessageBox threadId={id} />
     </div>
   );
 }

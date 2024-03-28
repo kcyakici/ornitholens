@@ -1,26 +1,15 @@
 "use client";
 import React from "react";
-import { Theme } from "@mui/material/styles";
 // import { makeStyles } from "@mui/system/styles"; // Import makeStyles from @mui/system/styles
 import { Card, CardContent, Typography, Avatar } from "@mui/material";
 import Link from "next/link";
 
-// const useStyles = makeStyles((theme: Theme) => ({
-//   card: {
-//     marginBottom: theme.spacing(2), // Adjust the margin as needed
-//   },
-//   avatar: {
-//     marginRight: theme.spacing(2),
-//   },
-// }));
-
 type ForumThreadCardProps = {
-  threadId: number;
+  threadId: string;
   title: string;
   lastReplied: string;
   openedBy: string;
   openedTime: string;
-  // handleClick(): void;
 };
 
 const ForumThreadCard = ({
@@ -29,15 +18,9 @@ const ForumThreadCard = ({
   lastReplied,
   openedBy,
   openedTime,
-}: // handleClick,
-ForumThreadCardProps) => {
-  // const classes = useStyles();
-
+}: ForumThreadCardProps) => {
   return (
-    <Card
-    // className={classes.card}
-    // onClick={handleClick}
-    >
+    <Card>
       <CardContent>
         <Link href={`/community/thread/${threadId}`} passHref>
           <Typography variant="h5" component="h2">

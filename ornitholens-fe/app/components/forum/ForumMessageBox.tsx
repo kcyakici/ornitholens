@@ -14,7 +14,7 @@ export default function ForumMessageBox({
 }: ForumMessageBoxProps): JSX.Element {
   const [messageContent, setMessageContent] = useState("");
   const [isPosting, setIsPosting] = useState(false);
-  const { token } = useAuth();
+  const { token, isContextLoggedIn } = useAuth();
   const router = useRouter();
 
   const handleMessageContentChange = (
@@ -39,7 +39,7 @@ export default function ForumMessageBox({
     }
   };
 
-  return (
+  return isContextLoggedIn ? (
     <div
       style={{
         display: "flex",
@@ -63,5 +63,7 @@ export default function ForumMessageBox({
         {isPosting ? "Posting..." : "Post"}
       </Button>
     </div>
+  ) : (
+    <></>
   );
 }

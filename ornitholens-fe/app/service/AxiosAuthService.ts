@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { ForumThreadWithoutPosts } from "../types/types";
+import { ForumThread, ForumThreadWithoutPosts } from "../types/types";
 
 const BASE_URL = "http://localhost:8080/";
 
@@ -104,7 +104,7 @@ export async function postForumThread(
 
 export async function postForumPost(
   jwt: string,
-  forumId: string,
+  threadId: string,
   content: string
 ) {
   const bearer_token = "Bearer " + jwt;
@@ -116,7 +116,7 @@ export async function postForumPost(
   const response: AxiosResponse = await axios.post(
     BASE_URL + "threads/posts",
     {
-      forumId,
+      threadId,
       content,
     },
     config
@@ -127,6 +127,13 @@ export async function postForumPost(
 export async function getForumThreads() {
   const response: AxiosResponse<ForumThreadWithoutPosts[]> = await axios.get(
     BASE_URL + "threads"
+  );
+  return response;
+}
+
+export async function getForumThread({ id }: { id: string }) {
+  const response: AxiosResponse<ForumThread> = await axios.get(
+    BASE_URL + `threads/${id}`
   );
   return response;
 }
