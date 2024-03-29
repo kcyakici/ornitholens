@@ -14,6 +14,8 @@ public interface ForumThreadRepository extends JpaRepository<ForumThread, Long> 
     Optional<ForumThread> findFirstById(Long id);
     @Query("SELECT ft FROM ForumThread ft JOIN FETCH ft.forumPostList WHERE ft.id = ?1")
     Optional<ForumThread> findByIdJoinFetchPosts(Long id);
+    @Query("SELECT ft FROM ForumThread ft JOIN FETCH ft.forumPostList pt JOIN FETCH pt.forumMember WHERE ft.id = ?1")
+    Optional<ForumThread> findByIdJoinFetchPostsAndForumMembers(Long id);
     @Override
     ForumThread save(ForumThread forumThread);
 

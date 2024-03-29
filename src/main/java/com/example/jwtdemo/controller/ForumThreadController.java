@@ -33,7 +33,7 @@ public class ForumThreadController {
     @GetMapping("/threads/{threadId}")
     public ResponseEntity<ForumThread> getForumThread(@PathVariable String threadId) {
         long threadIdLong = convertToLong(threadId);
-        ForumThread forumThread = forumThreadService.getForumThreadJoinFetch(threadIdLong);
+        ForumThread forumThread = forumThreadService.getForumThreadJoinFetchPostsAndForumMembers(threadIdLong);
         return new ResponseEntity<>(forumThread, HttpStatus.ACCEPTED);
     }
 
@@ -71,7 +71,7 @@ public class ForumThreadController {
         ForumMember forumMember = userDetailsServiceImpl.findForumMemberByUsername(requestingUser.getUsername());
         LocalDateTime now = LocalDateTime.now();
 
-        ForumThread forumThread = forumThreadService.getForumThreadJoinFetch(threadIdLong);
+        ForumThread forumThread = forumThreadService.getForumThreadJoinFetchPosts(threadIdLong);
         ForumPost newForumPost = new ForumPost(postContent, forumMember, now);
         forumThread.addPost(newForumPost);
 

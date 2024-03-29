@@ -33,8 +33,17 @@ public class ForumThreadService {
         }
     }
 
-    public ForumThread getForumThreadJoinFetch(Long id) {
+    public ForumThread getForumThreadJoinFetchPosts(Long id) {
         Optional<ForumThread> optionalForumThread = forumThreadRepository.findByIdJoinFetchPosts(id);
+        if(optionalForumThread.isPresent()) {
+            return optionalForumThread.get();
+        } else {
+            throw new ForumThreadNotFoundException("The forum thread with id: " + id + " does not exist!");
+        }
+    }
+
+    public ForumThread getForumThreadJoinFetchPostsAndForumMembers(Long id) {
+        Optional<ForumThread> optionalForumThread = forumThreadRepository.findByIdJoinFetchPostsAndForumMembers(id);
         if(optionalForumThread.isPresent()) {
             return optionalForumThread.get();
         } else {
