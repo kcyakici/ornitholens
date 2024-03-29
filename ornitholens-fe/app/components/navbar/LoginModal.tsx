@@ -12,10 +12,10 @@ export const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
+  width: 350,
+  bgcolor: "#f7fafc", // Light gray background
+  borderRadius: 8, // Rounded corners
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow
   p: 4,
 };
 
@@ -24,7 +24,7 @@ export type LoginModalProps = {
   handleClose(): void;
 };
 
-export default function RegisterModal({
+export default function LoginModal({
   open,
   handleClose,
 }: LoginModalProps): JSX.Element {
@@ -60,10 +60,13 @@ export default function RegisterModal({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <h1 style={{ fontSize: "1.5em" }}>Join OrnithoLens Today</h1>
+        <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>
+          Join OrnithoLens Today
+        </h1>
         <TextField
           required
-          sx={{ marginY: "10px" }}
+          fullWidth
+          margin="normal"
           id="outlined-required"
           label="Email"
           value={email}
@@ -72,7 +75,8 @@ export default function RegisterModal({
         />
         <TextField
           required
-          sx={{ marginY: "10px" }}
+          fullWidth
+          margin="normal"
           id="outlined-password-input"
           label="Password"
           type="password"
@@ -80,7 +84,12 @@ export default function RegisterModal({
           value={password}
           onChange={handlePasswordChange}
         />
-        <Button color="inherit" onClick={handleSubmit}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          fullWidth
+        >
           Login
         </Button>
       </Box>

@@ -1,5 +1,5 @@
-"use client";
-import { Box, Button, TextField } from "@mui/material";
+"use client"; // TODO seperate to server as much as possible
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { postForumThread } from "@/app/service/AxiosAuthService";
 import { useAuth } from "@/app/context/AuthContext";
@@ -25,9 +25,7 @@ const PostThreadPage: React.FC = () => {
 
     setIsPosting(true); // Disable the button to prevent multiple requests
     try {
-      console.log("You are here");
       const response = await postForumThread(token, threadTitle, threadContent);
-      console.log(response); // TODO remove
       router.push(`/community/thread/${response.data.id}`);
     } catch (error) {
       console.error("Error while trying to create the thread: " + error);
@@ -37,40 +35,49 @@ const PostThreadPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          maxWidth: "70%",
-        }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        maxWidth: "80%",
+        margin: "0 auto",
+        mt: 4, // Add margin at the top
+      }}
+    >
+      <Typography variant="h4" sx={{ mb: 2 }}>
+        Create a New Thread
+      </Typography>
+      <TextField
+        fullWidth
+        id="outlined-basic"
+        label="Title"
+        variant="outlined"
+        value={threadTitle}
+        onChange={handleTitleChange}
+        sx={{ mb: 2, bgcolor: "white" }} // Add margin at the bottom
+      />
+      <TextField
+        id="outlined-multiline-static"
+        label="Content"
+        multiline
+        minRows={4}
+        value={threadContent}
+        onChange={handleContentChange}
+        variant="outlined"
+        fullWidth
+        sx={{ mb: 2, bgcolor: "white" }} // Add margin at the bottom
+      />
+      <Button
+        variant="contained"
+        onClick={handleClick}
+        disabled={isPosting}
+        sx={{ alignSelf: "flex-end" }}
       >
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Title"
-          variant="outlined"
-          value={threadTitle}
-          onChange={handleTitleChange}
-        />
-        <TextField
-          id="outlined-multiline-static"
-          label="Multiline"
-          multiline
-          minRows={4}
-          value={threadContent}
-          onChange={handleContentChange}
-        />
-        <Button
-          sx={{ alignSelf: "flex-end" }}
-          onClick={handleClick}
-          disabled={isPosting}
-        >
-          {isPosting ? "Posting..." : "Post"}
-        </Button>
-      </Box>
-    </div>
+        {isPosting ? "Posting..." : "Post"}
+      </Button>
+    </Box>
   );
 };
 

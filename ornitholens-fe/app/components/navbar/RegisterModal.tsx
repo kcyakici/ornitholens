@@ -11,10 +11,10 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
+  width: 350,
+  bgcolor: "#f7fafc", // Light gray background
+  borderRadius: 8, // Rounded corners
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow
   p: 4,
 };
 
@@ -31,7 +31,6 @@ export default function RegisterModal({
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isEmailError, setEmailError] = React.useState(true);
-  //   const [isPasswordError, setPasswordError] = React.useState(true);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -51,18 +50,9 @@ export default function RegisterModal({
     if (!isEmailError) {
       registerHandler({ username, email, password });
     } else {
-      // Optionally, you can display an error message or handle invalid form data
       console.log("Invalid form data");
     }
   };
-
-  //   const validatePassword = (password: string): void => {
-  //     // Regular expression for validating password
-  //     const regex =
-  //       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+])(?=.*[a-zA-Z]).{8,16}$/;
-  //     const isValid = regex.test(password);
-  //     isValid ? setPasswordError(false) : setPasswordError(true);
-  //   };
 
   return (
     <Modal
@@ -72,10 +62,13 @@ export default function RegisterModal({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <h1 style={{ fontSize: "1.5em" }}>Join OrnithoLens Today</h1>
+        <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>
+          Join OrnithoLens Today
+        </h1>
         <TextField
           required
-          sx={{ marginY: "10px" }}
+          fullWidth
+          margin="normal"
           id="outlined-required"
           label="Username"
           value={username}
@@ -83,7 +76,8 @@ export default function RegisterModal({
         />
         <TextField
           required
-          sx={{ marginY: "10px" }}
+          fullWidth
+          margin="normal"
           id="outlined-required"
           label="Email"
           value={email}
@@ -92,17 +86,21 @@ export default function RegisterModal({
         />
         <TextField
           required
-          sx={{ marginY: "10px" }}
+          fullWidth
+          margin="normal"
           id="outlined-password-input"
           label="Password"
           type="password"
           autoComplete="current-password"
           value={password}
           onChange={handlePasswordChange}
-          //   error={isPasswordError}
-          //   helperText="Helper text"
         />
-        <Button color="inherit" onClick={handleSubmit}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          fullWidth
+        >
           Register
         </Button>
       </Box>

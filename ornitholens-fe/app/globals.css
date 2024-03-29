@@ -3,6 +3,19 @@
 @tailwind utilities;
 
 :root {
+  --primary-color: #2c5282; /* Dark blue for primary elements */
+  --secondary-color: #9cb5c2; /* Light blue for secondary elements */
+  --accent-color: #f7fafc; /* Light gray for accents */
+  --foreground-color: #2d3748; /* Dark gray for text */
+  --background-color: #edf2f7; /* Off-white for background */
+}
+
+body {
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+}
+
+/* :root {
   --foreground-rgb: 0,0,0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +43,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */

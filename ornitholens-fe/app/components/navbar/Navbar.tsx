@@ -26,45 +26,57 @@ export default function Navbar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            OrnithoLens
-          </Typography>
-          {isContextLoggedIn ? (
-            <>
-              <Button color="inherit" onClick={contextLogout}>
-                Logout
-              </Button>
-              <Link href="/community" passHref>
-                <Button color="inherit">Community</Button>
-              </Link>
-              <Button color="inherit" onClick={() => testAuthentication(token)}>
-                Hello Check
-                {/* TODO: Remove */}
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                color="inherit"
-                onClick={() => setIsRegisterModalOpen(true)}
-              >
-                Register
-              </Button>
-              <Button color="inherit" onClick={() => setIsLoginModalOpen(true)}>
-                Login
-              </Button>
-            </>
-          )}
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Link href="/" passHref>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                OrnithoLens
+              </Typography>
+            </Link>
+          </Box>
+          <Box sx={{ display: "flex" }}>
+            <Link href="/community" passHref>
+              <Button color="inherit">Community</Button>
+            </Link>
+            {isContextLoggedIn ? (
+              <>
+                <Button color="inherit" onClick={contextLogout}>
+                  Logout
+                </Button>
+                <Button
+                  color="inherit"
+                  onClick={() => testAuthentication(token)}
+                >
+                  Hello Check
+                  {/* TODO: Remove */}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  color="inherit"
+                  onClick={() => setIsRegisterModalOpen(true)}
+                >
+                  Register
+                </Button>
+                <Button
+                  color="inherit"
+                  onClick={() => setIsLoginModalOpen(true)}
+                >
+                  Login
+                </Button>
+              </>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
       <RegisterModal
