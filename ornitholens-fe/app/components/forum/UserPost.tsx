@@ -2,6 +2,7 @@ import React from "react";
 // import { makeStyles } from "@mui/styles";
 import { Avatar, Card, CardContent, Typography } from "@mui/material";
 import { Theme } from "@emotion/react";
+import ForumPostButtons from "./ForumPostButtons";
 
 // const useStyles = makeStyles((theme : Theme) => ({
 //   card: {
@@ -16,9 +17,10 @@ type UserPostProps = {
   username: string;
   postedAt: string;
   content: string;
+  id: string;
 };
 
-const UserPost = ({ username, postedAt, content }: UserPostProps) => {
+const UserPost = ({ username, postedAt, content, id }: UserPostProps) => {
   return (
     <Card
     // className={classes.card}
@@ -39,6 +41,7 @@ const UserPost = ({ username, postedAt, content }: UserPostProps) => {
         </Typography>
         <Typography variant="body1">{content}</Typography>
       </CardContent>
+      <ForumPostButtons postOwner={username} id={id} />
     </Card>
   );
 };

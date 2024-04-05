@@ -1,5 +1,6 @@
 import ForumMessageBox from "@/app/components/forum/ForumMessageBox";
 import UserPost from "@/app/components/forum/UserPost";
+import UserPostWrapper from "@/app/components/forum/UserPostWrapper";
 import { useAuth } from "@/app/context/AuthContext";
 import { getForumThread } from "@/app/service/AxiosAuthService";
 
@@ -11,14 +12,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <div>
       <h1>{data.title}</h1>
-      {data.forumPostList.map((forumPost) => (
-        <UserPost
-          key={forumPost.id}
-          username="Harcoded username"
-          postedAt={forumPost.time}
-          content={forumPost.content}
-        />
-      ))}
+      <UserPostWrapper forumPostList={data.forumPostList} />
       <ForumMessageBox threadId={id} />
     </div>
   );

@@ -1,6 +1,7 @@
 // AuthContext.tsx
 "use client";
 import React, { createContext, useState, useEffect } from "react";
+import { isTokenExpired } from "../utils/JwtUtil";
 
 interface AuthContextProps {
   children: React.ReactNode;
@@ -26,9 +27,13 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }) => {
     // Check if JWT exists in local storage
     const token = localStorage.getItem("jwt");
     if (token) {
-      // If JWT exists, set isContextLoggedIn to true
-      setToken(token);
-      setIsContextLoggedIn(true);
+      if (isTokenExpired(token)) {
+        contextLogout();
+      } else {
+        // If JWT exists, set isContextLoggedIn to true
+        setToken(token);
+        setIsContextLoggedIn(true);
+      }
     }
   }, []); // Run this effect only once on component mount
 

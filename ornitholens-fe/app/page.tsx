@@ -1,4 +1,4 @@
-import ForumPostHoverOptions from "./components/forum/ForumPostHoverOptions";
+import ForumPostButtons from "./components/forum/ForumPostButtons";
 
 export default function Home(): JSX.Element {
   return (
