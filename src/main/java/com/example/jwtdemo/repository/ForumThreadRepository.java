@@ -1,6 +1,7 @@
 package com.example.jwtdemo.repository;
 
 import com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO;
+import com.example.jwtdemo.dto.ForumThreadDTO;
 import com.example.jwtdemo.entity.ForumThread;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,10 @@ public interface ForumThreadRepository extends JpaRepository<ForumThread, Long> 
     Optional<ForumThread> findByIdJoinFetchPosts(Long id);
     @Query("SELECT ft FROM ForumThread ft JOIN FETCH ft.forumPostList pt JOIN FETCH pt.forumMember WHERE ft.id = ?1")
     Optional<ForumThread> findByIdJoinFetchPostsAndForumMembers(Long id);
+
+    @Query("SELECT ft FROM ForumThread ft JOIN FETCH ft.forumPostList pt JOIN FETCH pt.forumMember WHERE ft.id = ?1")
+    Optional<ForumThreadDTO> findFirstByIdWithPostsAndUsers(Long id);
+
     @Override
     ForumThread save(ForumThread forumThread);
 

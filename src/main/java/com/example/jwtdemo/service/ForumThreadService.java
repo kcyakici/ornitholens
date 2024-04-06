@@ -1,5 +1,6 @@
 package com.example.jwtdemo.service;
 
+import com.example.jwtdemo.dto.ForumThreadDTO;
 import com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO;
 import com.example.jwtdemo.entity.ForumThread;
 import com.example.jwtdemo.exception.ForumThreadNotFoundException;
@@ -42,13 +43,10 @@ public class ForumThreadService {
         }
     }
 
-    public ForumThread getForumThreadJoinFetchPostsAndForumMembers(Long id) {
-        Optional<ForumThread> optionalForumThread = forumThreadRepository.findByIdJoinFetchPostsAndForumMembers(id);
-        if(optionalForumThread.isPresent()) {
-            return optionalForumThread.get();
-        } else {
-            throw new ForumThreadNotFoundException("The forum thread with id: " + id + " does not exist!");
-        }
+    public ForumThreadDTO getForumThreadWithPostsAndOwners(Long id) {
+        Optional<ForumThreadDTO> optionalForumThreadDTO = forumThreadRepository.findFirstByIdWithPostsAndUsers(id);
+        if (optionalForumThreadDTO.isPresent()) return optionalForumThreadDTO.get();
+        else throw new ForumThreadNotFoundException("The forum thread with id: " + id + " does not exist!");
     }
 
     public ForumThread saveForumThread(ForumThread forumThread) {
