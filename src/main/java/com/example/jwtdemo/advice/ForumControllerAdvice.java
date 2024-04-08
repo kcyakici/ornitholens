@@ -1,5 +1,6 @@
 package com.example.jwtdemo.advice;
 
+import com.example.jwtdemo.exception.ForumPostNotFoundException;
 import com.example.jwtdemo.exception.ForumThreadNotFoundException;
 import com.example.jwtdemo.exception.InvalidIdException;
 import org.springframework.http.HttpStatus;
@@ -17,5 +18,10 @@ public class ForumControllerAdvice {
     @ExceptionHandler(value = ForumThreadNotFoundException.class)
     public ResponseEntity<String> handleInvalidId(ForumThreadNotFoundException forumThreadNotFoundException) {
         return new ResponseEntity<>(forumThreadNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = ForumPostNotFoundException.class)
+    public ResponseEntity<String> handleInvalidPostId(ForumPostNotFoundException forumPostNotFoundException) {
+        return new ResponseEntity<>(forumPostNotFoundException.getMessage(), HttpStatus.NOT_FOUND);
     }
 }

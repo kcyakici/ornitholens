@@ -8,6 +8,7 @@ import com.example.jwtdemo.entity.ForumThread;
 import com.example.jwtdemo.entity.ForumMember;
 import com.example.jwtdemo.entity.ForumPost;
 import com.example.jwtdemo.exception.InvalidIdException;
+import com.example.jwtdemo.service.ForumPostService;
 import com.example.jwtdemo.service.ForumThreadService;
 import com.example.jwtdemo.service.jwt.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.example.jwtdemo.utils.ConversionUtil.convertToLong;
 
 @RestController
 public class ForumThreadController {
@@ -79,15 +82,5 @@ public class ForumThreadController {
         ForumThread createdForumThread = forumThreadService.saveForumThread(forumThread);
         System.out.println("Created forum thread: " + createdForumThread);
         return new ResponseEntity<ForumThread>(createdForumThread, HttpStatus.CREATED);
-    }
-
-    private static long convertToLong(String threadId) {
-        long threadIdLong;
-        try {
-            threadIdLong = Long.parseLong(threadId);
-        } catch (NumberFormatException numberFormatException) {
-            throw new InvalidIdException("Thread id : " + threadId + " is not a valid id");
-        }
-        return threadIdLong;
     }
 }

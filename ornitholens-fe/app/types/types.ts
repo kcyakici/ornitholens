@@ -1,5 +1,5 @@
 export type ForumPost = {
-  forumMember: string;
+  forumMember: ForumMember;
   content: string;
   time: string;
   id: string;
@@ -9,6 +9,12 @@ export type ForumThreadWithoutPosts = {
   id: string;
   title: string;
   time: string;
+};
+
+export type ForumMember = {
+  id: string;
+  name: string;
+  email: string;
 };
 
 export type ForumThread = {

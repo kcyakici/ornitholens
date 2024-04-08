@@ -8,11 +8,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const id = params.slug;
   console.log(id);
   const forumThread = await getForumThread({ id });
-  const { data } = forumThread;
   return (
     <div>
-      <h1>{data.title}</h1>
-      <UserPostWrapper forumPostList={data.forumPostList} />
+      <h1>{forumThread.title}</h1>
+      <UserPostWrapper forumPostList={forumThread.forumPostList} />
       <ForumMessageBox threadId={id} />
     </div>
   );

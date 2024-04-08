@@ -3,6 +3,7 @@ import React from "react";
 import { Avatar, Card, CardContent, Typography } from "@mui/material";
 import { Theme } from "@emotion/react";
 import ForumPostButtons from "./ForumPostButtons";
+import { ForumMember } from "@/app/types/types";
 
 // const useStyles = makeStyles((theme : Theme) => ({
 //   card: {
@@ -14,13 +15,13 @@ import ForumPostButtons from "./ForumPostButtons";
 // }));
 
 type UserPostProps = {
-  username: string;
+  forumMember: ForumMember;
   postedAt: string;
   content: string;
   id: string;
 };
 
-const UserPost = ({ username, postedAt, content, id }: UserPostProps) => {
+const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
   return (
     <Card
     // className={classes.card}
@@ -30,10 +31,10 @@ const UserPost = ({ username, postedAt, content, id }: UserPostProps) => {
           <Avatar
           //   className={classes.avatar}
           >
-            {username[0]}
+            {forumMember.name[0]}
           </Avatar>
           <Typography variant="subtitle1" component="div">
-            {username}
+            {forumMember.name}
           </Typography>
         </div>
         <Typography variant="body2" color="textSecondary" gutterBottom>
@@ -41,7 +42,7 @@ const UserPost = ({ username, postedAt, content, id }: UserPostProps) => {
         </Typography>
         <Typography variant="body1">{content}</Typography>
       </CardContent>
-      <ForumPostButtons postOwner={username} id={id} />
+      <ForumPostButtons postOwnerEmail={forumMember.email} id={id} />
     </Card>
   );
 };

@@ -2,6 +2,7 @@ package com.example.jwtdemo.service;
 
 import com.example.jwtdemo.dto.ForumThreadDTO;
 import com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO;
+import com.example.jwtdemo.entity.ForumPost;
 import com.example.jwtdemo.entity.ForumThread;
 import com.example.jwtdemo.exception.ForumThreadNotFoundException;
 import com.example.jwtdemo.repository.ForumThreadRepository;

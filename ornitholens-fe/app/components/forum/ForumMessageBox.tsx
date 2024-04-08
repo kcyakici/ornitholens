@@ -31,7 +31,8 @@ export default function ForumMessageBox({
       console.log("You are here");
       const response = await postForumPost(token, threadId, messageContent);
       console.log(response); // TODO remove
-      router.push(`/community/thread/${threadId}`);
+      setMessageContent("");
+      router.refresh();
     } catch (error) {
       console.error("Error while trying to create the post: " + error);
     } finally {

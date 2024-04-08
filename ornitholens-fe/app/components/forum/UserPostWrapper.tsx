@@ -13,7 +13,7 @@ export default async function UserPostWrapper({
         <UserPost
           key={forumPost.id}
           id={forumPost.id}
-          username="Harcoded username"
+          forumMember={forumPost.forumMember}
           postedAt={forumPost.time}
           content={forumPost.content}
         />

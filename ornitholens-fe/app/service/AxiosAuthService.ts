@@ -1,5 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { ForumThread, ForumThreadWithoutPosts } from "../types/types";
+import {
+  ForumPost,
+  ForumThread,
+  ForumThreadWithoutPosts,
+} from "../types/types";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const BASE_URL = "http://localhost:8080/";
 
@@ -99,6 +105,7 @@ export async function postForumThread(
     },
     config
   );
+
   return response;
 }
 
@@ -121,6 +128,7 @@ export async function postForumPost(
     },
     config
   );
+  // revalidatePath(`community/thread/${threadId}`); TODO may not be needed because of client side refresh
   return response;
 }
 
@@ -132,8 +140,29 @@ export async function getForumThreads() {
 }
 
 export async function getForumThread({ id }: { id: string }) {
-  const response: AxiosResponse<ForumThread> = await axios.get(
-    BASE_URL + `threads/${id}`
-  );
-  return response;
+  try {
+    const response: AxiosResponse<ForumThread> = await axios.get(
+      BASE_URL + `threads/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    throw new Error("Unable to show the forum thread!");
+  }
+}
+
+export async function deleteForumPost(id: string, jwt: string) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  let response: AxiosResponse<ForumPost>;
+  try {
+    response = await axios.delete(BASE_URL + `posts/${id}`, config);
+    // revalidatePath(`community/thread/${id}`); TODO may not be needed because of client side refresh
+    return response.data;
+  } catch (error) {
+    throw new Error("Cannot remove the forum post!" + error + "\n");
+  }
 }
