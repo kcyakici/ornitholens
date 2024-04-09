@@ -4,6 +4,7 @@ import {
   getNumberOfFolders,
 } from "../utils/FileOperations";
 import { Box } from "@mui/material";
+import AnswerButtonWrapper from "../components/game/AnswerButtonWrapper";
 
 export default async function PlayPage() {
   let imageSrc = "";
@@ -13,7 +14,7 @@ export default async function PlayPage() {
     console.log(`Bird: ${randomFolder}`);
     const randomFile = await chooseRandomFolder(randomFolder);
     console.log(`Bird: ${randomFile}`);
-    imageSrc = "/" + randomFile.replaceAll("\\", "/").substring(7);
+    imageSrc = "/" + randomFile.replaceAll("\\", "/").substring(7); // get rid of /public
   } catch (err) {
     console.error("Error occurred:", err);
   }
@@ -24,11 +25,16 @@ export default async function PlayPage() {
       <Image
         src={imageSrc}
         alt="An image of a bird"
+        priority
         width={0}
         height={0}
         sizes="100vw"
         style={{ width: "20%", height: "auto" }}
       ></Image>
+      <AnswerButtonWrapper
+        correctAnswer="Penguin"
+        answersForButtons={["Penguin", "Albatross", "Sparrow", "Pigeon"]}
+      ></AnswerButtonWrapper>
     </Box>
   );
 }
