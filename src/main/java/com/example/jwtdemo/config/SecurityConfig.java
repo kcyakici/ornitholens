@@ -42,6 +42,7 @@ public class SecurityConfig {
                         authorizeHttpRequests
                                 .requestMatchers("/register", "/authenticate").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/threads", "/threads/**").permitAll()
+                                .requestMatchers("/upload").permitAll() // TODO change access
                                 .requestMatchers(HttpMethod.POST, "/threads").authenticated()
                                 .anyRequest().authenticated()
                 )
@@ -70,6 +71,7 @@ public class SecurityConfig {
                 registry.addMapping("/**").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/**").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/posts/**").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/upload").allowedOrigins("http://localhost:3000");
             }
         };
     }
