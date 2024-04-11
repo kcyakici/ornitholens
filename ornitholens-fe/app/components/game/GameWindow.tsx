@@ -1,40 +1,53 @@
-import { Box } from "@mui/material";
 import BirdPicture from "./BirdPicture";
 import AnswerButtonWrapper from "./AnswerButtonWrapper";
-import { chooseRandomFolder } from "@/app/utils/FileOperations";
-import React from "react";
+import { chooseRandomFolder, getFilesArray } from "@/app/utils/FileOperations";
+import React, { useState } from "react";
+import { chooseRandomFromArrays } from "@/app/utils/MathUtils";
 
 export default async function GameWindow() {
-  let imageSrc = "";
-  let correctAnswer = "";
-  let possibleAnswersArray: string[] = [];
+  const [imageSource, setImageSource] = useState("");
+  const [correctAnswer, setCorrectAnswer] = useState("");
+  const [possibleAnswersArray, setPossibleAnswersArray] = useState<string[]>(
+    []
+  );
+
   try {
     const dir = "public\\images";
-    const randomFolder = await chooseRandomFolder(dir);
-    console.log(`Bird: ${randomFolder}`);
-    const randomFile = await chooseRandomFolder(randomFolder);
+    const foldersArray = await getFilesArray(dir);
+    const randomFromArrays = chooseRandomFromArrays(foldersArray, 4);
+    console.log(`randomFromArrays: ${randomFromArrays}`);
+    const [correctAnswerTemp, ...possibleAnswersArrayTemp] = randomFromArrays;
+    setCorrectAnswer(correctAnswerTemp);
+    setPossibleAnswersArray(possibleAnswersArrayTemp);
+    console.log(`Correct Answer name: ${correctAnswer}`);
+    console.log("Possible answers: ");
+    possibleAnswersArray.forEach((answer) => console.log(answer));
+
+    const randomFile = await chooseRandomFolder(dir + "\\" + correctAnswer);
     console.log(`Bird: ${randomFile}`);
-    imageSrc = "/" + randomFile.replaceAll("\\", "/").substring(7); // get rid of /public
-    correctAnswer = parseBirdName(imageSrc);
+    setImageSource("/" + randomFile.replaceAll("\\", "/").substring(7)); // get rid of /public
+    // correctAnswer = parseBirdName(imageSrc);
     console.log(`Correct answer: ${correctAnswer}`);
   } catch (err) {
     console.error("Error occurred:", err);
   }
   return (
     <div>
-      <BirdPicture imageSrc={imageSrc} />
+      <BirdPicture imageSrc={imageSource} />
       <AnswerButtonWrapper
-        correctAnswer="Penguin"
-        answersForButtons={["Penguin", "Albatros", "Sparrow", "Pigeon"]}
+        correctAnswer={parseBirdName(correctAnswer)}
+        answersForButtons={[
+          parseBirdName(correctAnswer),
+          ...possibleAnswersArray.map((name) => parseBirdName(name)),
+        ]}
       ></AnswerButtonWrapper>
     </div>
   );
 }
 
-function parseBirdName(imageSrc: string) {
-  return imageSrc
-    .substring(imageSrc.lastIndexOf("/") + 1, imageSrc.lastIndexOf("."))
+function parseBirdName(imageFolderName: string) {
+  return imageFolderName
+    .substring(imageFolderName.lastIndexOf(".") + 1)
     .split("_")
-    .slice(0, -2)
     .join(" ");
 }
