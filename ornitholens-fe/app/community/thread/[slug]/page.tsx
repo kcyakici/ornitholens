@@ -17,7 +17,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div>
-      <Typography variant="h3" gutterBottom>
+      <Typography sx={{ textAlign: "center" }} variant="h3" gutterBottom>
         {forumThreadData.title}
       </Typography>
       <UserPostWrapper forumPostList={forumThreadData.forumPostList} />

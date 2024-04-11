@@ -36,7 +36,11 @@ const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
           >
             {forumMember.name[0]}
           </Avatar>
-          <Typography variant="subtitle1" component="div">
+          <Typography
+            sx={{ marginLeft: "20px" }}
+            variant="subtitle1"
+            component="div"
+          >
             {forumMember.name}
           </Typography>
         </div>
