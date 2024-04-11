@@ -43,6 +43,7 @@ public class SecurityConfig {
                                 .requestMatchers("/register", "/authenticate").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/threads", "/threads/**").permitAll()
                                 .requestMatchers("/upload").permitAll() // TODO change access
+                                .requestMatchers("/bird").permitAll() // TODO change access
                                 .requestMatchers(HttpMethod.POST, "/threads").authenticated()
                                 .anyRequest().authenticated()
                 )

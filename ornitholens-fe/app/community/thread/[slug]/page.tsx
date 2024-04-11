@@ -9,20 +9,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const id = params.slug;
   console.log(id);
   const forumThreadResponse = await getForumThread(id);
-  if (!forumThreadResponse) {
-    return <h1>Loading...</h1>;
-  }
-
-  const forumThreadData = forumThreadResponse!.data;
+  const forumThreadData = forumThreadResponse?.data;
 
   return (
-    <div>
-      <Typography sx={{ textAlign: "center" }} variant="h3" gutterBottom>
-        {forumThreadData.title}
-      </Typography>
-      <UserPostWrapper forumPostList={forumThreadData.forumPostList} />
-      <ForumMessageBox threadId={id} />
-    </div>
+    <>
+      {forumThreadData ? (
+        <div>
+          <Typography sx={{ textAlign: "center" }} variant="h3" gutterBottom>
+            {forumThreadData.title}
+          </Typography>
+          <UserPostWrapper forumPostList={forumThreadData.forumPostList} />
+          <ForumMessageBox threadId={id} />
+        </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
 //   //   const [threads, setThreads] = useState([]);
