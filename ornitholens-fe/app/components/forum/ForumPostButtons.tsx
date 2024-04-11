@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuth } from "@/app/context/AuthContext";
-import { deleteForumPost } from "@/app/service/AxiosAuthService";
 import { extractJwtSubject } from "@/app/utils/JwtUtil";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";

@@ -7,11 +7,17 @@ import { getForumThread } from "@/app/service/AxiosAuthService";
 export default async function Page({ params }: { params: { slug: string } }) {
   const id = params.slug;
   console.log(id);
-  const forumThread = await getForumThread({ id });
+  const forumThreadResponse = await getForumThread(id);
+  if (!forumThreadResponse) {
+    return <h1>Loading...</h1>;
+  }
+
+  const forumThreadData = forumThreadResponse!.data;
+
   return (
     <div>
-      <h1>{forumThread.title}</h1>
-      <UserPostWrapper forumPostList={forumThread.forumPostList} />
+      <h1>{forumThreadData.title}</h1>
+      <UserPostWrapper forumPostList={forumThreadData.forumPostList} />
       <ForumMessageBox threadId={id} />
     </div>
   );

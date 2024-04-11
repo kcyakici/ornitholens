@@ -1,31 +1,37 @@
+"use client";
+
 import BirdPicture from "./BirdPicture";
 import AnswerButtonWrapper from "./AnswerButtonWrapper";
-import { chooseRandomFolder, getFilesArray } from "@/app/utils/FileOperations";
-import React, { useState } from "react";
-import { chooseRandomFromArrays } from "@/app/utils/MathUtils";
+// import { chooseRandomFolder, getFilesArray } from "@/app/utils/FileOperations";
+// import { useState } from "react";
+import { GET } from "@/app/routes/route";
 
 export default async function GameWindow() {
-  const [imageSource, setImageSource] = useState("");
-  const [correctAnswer, setCorrectAnswer] = useState("");
-  const [possibleAnswersArray, setPossibleAnswersArray] = useState<string[]>(
-    []
-  );
-
+  let foldersArray: string[];
+  let response2;
+  let imageSrc = "";
+  let correctAnswer: string = "";
+  let possibleAnswersArray: string[] = [];
   try {
-    const dir = "public\\images";
-    const foldersArray = await getFilesArray(dir);
-    const randomFromArrays = chooseRandomFromArrays(foldersArray, 4);
-    console.log(`randomFromArrays: ${randomFromArrays}`);
-    const [correctAnswerTemp, ...possibleAnswersArrayTemp] = randomFromArrays;
-    setCorrectAnswer(correctAnswerTemp);
-    setPossibleAnswersArray(possibleAnswersArrayTemp);
-    console.log(`Correct Answer name: ${correctAnswer}`);
-    console.log("Possible answers: ");
-    possibleAnswersArray.forEach((answer) => console.log(answer));
+    const response = await GET();
+    console.log(`Response body: ${response?.body}`);
+    const response1 = await response?.json();
+    console.log(`Response body: ${response1.body.imageUrl}`);
+    response2 = response1;
 
-    const randomFile = await chooseRandomFolder(dir + "\\" + correctAnswer);
-    console.log(`Bird: ${randomFile}`);
-    setImageSource("/" + randomFile.replaceAll("\\", "/").substring(7)); // get rid of /public
+    const dir = "public\\images";
+
+    // foldersArray = await getFilesArray(dir);
+    // const randomFromArrays = chooseRandomFromArrays(foldersArray, 4);
+    // console.log(`randomFromArrays: ${randomFromArrays}`);
+    // [correctAnswer, ...possibleAnswersArray] = randomFromArrays;
+    // console.log(`Correct Answer name: ${correctAnswer}`);
+    // console.log("Possible answers: ");
+    // possibleAnswersArray.forEach((answer) => console.log(answer));
+
+    // const randomFile = await chooseRandomFolder(dir + "\\" + correctAnswer);
+    // console.log(`Bird: ${randomFile}`);
+    // imageSrc = "/" + randomFile.replaceAll("\\", "/").substring(7); // get rid of /public
     // correctAnswer = parseBirdName(imageSrc);
     console.log(`Correct answer: ${correctAnswer}`);
   } catch (err) {
@@ -33,7 +39,7 @@ export default async function GameWindow() {
   }
   return (
     <div>
-      <BirdPicture imageSrc={imageSource} />
+      <BirdPicture imageSrc={response2.body.imageUrl} />
       <AnswerButtonWrapper
         correctAnswer={parseBirdName(correctAnswer)}
         answersForButtons={[

@@ -139,18 +139,19 @@ export async function getForumThreads() {
   return response;
 }
 
-export async function getForumThread({ id }: { id: string }) {
+export async function getForumThread(id: string) {
   try {
     const response: AxiosResponse<ForumThread> = await axios.get(
       BASE_URL + `threads/${id}`
     );
-    return response.data;
+    return response;
   } catch (error) {
-    throw new Error("Unable to show the forum thread!");
+    console.error("Error occurred while trying to get forum thread: " + error);
   }
 }
 
 export async function deleteForumPost(id: string, jwt: string) {
+  console.log(`Received id inside deleteForumPost: ${id}`);
   const bearer_token = "Bearer " + jwt;
   const config = {
     headers: {
@@ -160,9 +161,9 @@ export async function deleteForumPost(id: string, jwt: string) {
   let response: AxiosResponse<ForumPost>;
   try {
     response = await axios.delete(BASE_URL + `posts/${id}`, config);
-    // revalidatePath(`community/thread/${id}`); TODO may not be needed because of client side refresh
-    return response.data;
+    // revalidatePath(`/community/thread/[slug]`, "page"); // needs server component I think check: https://www.reddit.com/r/nextjs/comments/13ilupe/nextjs_134_error_invariant_static_generation/
+    return response;
   } catch (error) {
-    throw new Error("Cannot remove the forum post!" + error + "\n");
+    console.error("Error occurred while trying to delete a post: " + error);
   }
 }

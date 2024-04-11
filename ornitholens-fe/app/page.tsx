@@ -1,4 +1,4 @@
-import { chooseRandomFolder, getNumberOfFolders } from "./utils/FileOperations";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -63,6 +63,16 @@ export default function Home() {
           Start Birdwatching Now
         </a>
       </div>
+      <Image
+        src={
+          "/images/001.Black_footed_Albatross/Black_Footed_Albatross_0001_796111.jpg"
+        }
+        alt="An image of a bird"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "20%", height: "auto" }}
+      ></Image>
     </div>
   );
 }
