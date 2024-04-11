@@ -1,5 +1,17 @@
 import fs from "fs";
 
+export function getFilesArray(dir: string): Promise<string[]> {
+  return new Promise((resolve, reject) => {
+    fs.readdir(dir, (err, files) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(files);
+      }
+    });
+  });
+}
+
 export function getNumberOfFolders(dir: string): Promise<number> {
   return new Promise((resolve, reject) => {
     fs.readdir(dir, (err, files) => {
