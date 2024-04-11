@@ -4,6 +4,7 @@ import { Avatar, Card, CardContent, Typography } from "@mui/material";
 import { Theme } from "@emotion/react";
 import ForumPostButtons from "./ForumPostButtons";
 import { ForumMember } from "@/app/types/types";
+import { useTheme } from "@mui/material/styles";
 
 // const useStyles = makeStyles((theme : Theme) => ({
 //   card: {
@@ -22,9 +23,11 @@ type UserPostProps = {
 };
 
 const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
+  // const theme = useTheme();
   return (
     <Card
-    // className={classes.card}
+      sx={{ margin: "10px 200px" }}
+      // className={classes.card}
     >
       <CardContent>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -38,7 +41,7 @@ const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
           </Typography>
         </div>
         <Typography variant="body2" color="textSecondary" gutterBottom>
-          Posted at: {postedAt}
+          Posted at: {parseDate(postedAt)}
         </Typography>
         <Typography variant="body1">{content}</Typography>
       </CardContent>
@@ -48,3 +51,19 @@ const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
 };
 
 export default UserPost;
+
+function parseDate(dateString: string) {
+  const dateObj = new Date(dateString);
+
+  // Extract date components
+  const year = dateObj.getFullYear();
+  const month = dateObj.toLocaleString("default", { month: "long" });
+  const day = dateObj.getDate();
+
+  // Extract time components
+  const hour = dateObj.getHours();
+  const minute = dateObj.getMinutes();
+
+  // Format the date and time
+  return `${day} ${month}, ${year} ${hour}:${minute}`;
+}

@@ -28,7 +28,6 @@ export default function ForumMessageBox({
 
     setIsPosting(true); // Disable the button to prevent multiple requests
     try {
-      console.log("You are here");
       const response = await postForumPost(token, threadId, messageContent);
       console.log(response); // TODO remove
       setMessageContent("");
@@ -46,15 +45,17 @@ export default function ForumMessageBox({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        margin: "10px 200px",
       }}
     >
       <TextField
         id="outlined-multiline-static"
-        label="Multiline"
+        label="Write something to send your post"
         multiline
         minRows={4}
         value={messageContent}
         onChange={handleMessageContentChange}
+        sx={{ backgroundColor: "whitesmoke" }}
       />
       <Button
         sx={{ alignSelf: "flex-end" }}

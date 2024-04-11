@@ -4,6 +4,7 @@ import com.example.jwtdemo.exception.InvalidIdException;
 
 public class ConversionUtil {
     public static long convertToLong(String id) {
+        System.out.println("Received id inside convertToLong: " + id);
         long threadIdLong;
         try {
             threadIdLong = Long.parseLong(id);

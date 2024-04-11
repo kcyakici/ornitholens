@@ -3,6 +3,7 @@ import UserPost from "@/app/components/forum/UserPost";
 import UserPostWrapper from "@/app/components/forum/UserPostWrapper";
 import { useAuth } from "@/app/context/AuthContext";
 import { getForumThread } from "@/app/service/AxiosAuthService";
+import { Typography } from "@mui/material";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const id = params.slug;
@@ -16,7 +17,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div>
-      <h1>{forumThreadData.title}</h1>
+      <Typography variant="h3" gutterBottom>
+        {forumThreadData.title}
+      </Typography>
       <UserPostWrapper forumPostList={forumThreadData.forumPostList} />
       <ForumMessageBox threadId={id} />
     </div>
