@@ -72,7 +72,15 @@ export default function Home() {
         height={0}
         sizes="100vw"
         style={{ width: "20%", height: "auto" }}
-      ></Image>
+      />
+      <Image
+        src={"http://localhost:8080/images/gul.jpg"}
+        alt="An image of a bird"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "20%", height: "auto" }}
+      />
     </div>
   );
 }

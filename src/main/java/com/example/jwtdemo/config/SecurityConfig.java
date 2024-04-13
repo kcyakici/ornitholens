@@ -44,6 +44,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/threads", "/threads/**").permitAll()
                                 .requestMatchers("/upload").permitAll() // TODO change access
                                 .requestMatchers("/bird").permitAll() // TODO change access
+                                .requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/resources/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/threads").authenticated()
                                 .anyRequest().authenticated()
                 )
