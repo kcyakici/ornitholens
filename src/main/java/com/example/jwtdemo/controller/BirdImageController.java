@@ -1,5 +1,6 @@
 package com.example.jwtdemo.controller;
 
+import com.example.jwtdemo.dto.IdentificationGameDTO;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -12,11 +13,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 public class BirdImageController {
     private final String PATH = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\upload-trial\\menekse.jpg";
+    private final String birdImagesDirectory = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\src\\main\\resources\\static\\images";
+    private final String HOST_URL_FOR_IMAGE = "localhost:8080\\images\\";
+    private final List<String> directories = init();
     @GetMapping(value = "/bird", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public ResponseEntity<Resource> getBirdImage() {
         ByteArrayResource resource = null;
@@ -27,5 +38,65 @@ public class BirdImageController {
         }
 
         return new ResponseEntity<Resource>(resource, HttpStatus.OK);
+    }
+
+    @GetMapping("/identify")
+    public ResponseEntity<IdentificationGameDTO> getImageAndAnswers() {
+        List<String> randomAnswerList = chooseRandomAnswers();
+        String correctAnswerDirectoryName = randomAnswerList.get(0);
+        String image = chooseRandomImage(birdImagesDirectory + "\\" + correctAnswerDirectoryName);
+
+        String correctAnswerParsed = parseBirdNameFromFileName(correctAnswerDirectoryName);
+        List<String> randomAnswerListParsed = new ArrayList<>(randomAnswerList
+                .stream()
+                .map(this::parseBirdNameFromFileName)
+                .toList());
+        Collections.shuffle(randomAnswerListParsed);
+        String imageUrlToSend = (HOST_URL_FOR_IMAGE + correctAnswerDirectoryName + "/" + image).replaceAll("\\\\", "/");
+
+        return new ResponseEntity<>(new IdentificationGameDTO(imageUrlToSend, correctAnswerParsed, randomAnswerListParsed), HttpStatus.OK);
+    }
+
+    private List<String> chooseRandomAnswers() {
+        assert directories != null;
+        List<String> randomAnswerList = new ArrayList<>();
+        List<String> allAnswers = new ArrayList<>(directories);
+        Random rd = new Random();
+
+        for (int i = 0; i < 4; i++) {
+            randomAnswerList.add(allAnswers.remove(rd.nextInt(0, allAnswers.size() - 1)));
+        }
+
+        return randomAnswerList;
+    }
+
+    private String chooseRandomImage(String folderName) {
+        List<String> fileNameList = getFileNames(folderName);
+        Random rd = new Random();
+
+        assert fileNameList != null;
+        return fileNameList.get(rd.nextInt(0, fileNameList.size() - 1));
+    }
+
+    private List<String> init() {
+        return getFileNames(birdImagesDirectory);
+    }
+
+    private List<String> getFileNames(String directory) {
+        try {
+            Stream<Path> pathStream = Files.list(Paths.get(directory));
+            return pathStream
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.toList());
+
+        } catch (IOException exception) {
+            System.err.println("Tried to read the folders but was not successful");
+            return null;
+        }
+    }
+
+    private String parseBirdNameFromFileName(String fileName) {
+        return String.join(" ", fileName.substring(fileName.indexOf(".") + 1).split("_"));
     }
 }
