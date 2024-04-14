@@ -7,16 +7,20 @@ export default function AnswerButton({
   correctAnswer,
   buttonDisplayAnswer,
   handleGameWindowAnswerGiven,
+  isButtonsDisabled,
+  disableButtons,
 }: {
   correctAnswer: string;
   buttonDisplayAnswer: string;
   handleGameWindowAnswerGiven(): void;
+  isButtonsDisabled: boolean;
+  disableButtons(): void;
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const [buttonStyle, setButtonStyle] = useState({});
 
   const handleClick = () => {
-    if (isClicked) return;
+    if (isClicked || isButtonsDisabled) return;
 
     if (correctAnswer === buttonDisplayAnswer) {
       setButtonStyle(styleCorrect);
@@ -24,6 +28,7 @@ export default function AnswerButton({
       setButtonStyle(styleFalse);
     }
     setIsClicked(true);
+    disableButtons();
     handleGameWindowAnswerGiven();
   };
 
