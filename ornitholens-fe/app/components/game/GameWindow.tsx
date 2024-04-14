@@ -1,59 +1,46 @@
 "use client";
-
+import useSWR from "swr";
 import BirdPicture from "./BirdPicture";
 import AnswerButtonWrapper from "./AnswerButtonWrapper";
-// import { chooseRandomFolder, getFilesArray } from "@/app/utils/FileOperations";
-// import { useState } from "react";
-import { GET } from "@/app/routes/route";
+import { useEffect, useState } from "react";
+import { GameImageAndAnswers } from "@/app/types/types";
+import { Button } from "@mui/material";
+import { getImageAndAnswers } from "@/app/service/AxiosAuthService";
 
-export default async function GameWindow() {
-  let foldersArray: string[];
-  let response2;
-  let imageSrc = "";
-  let correctAnswer: string = "";
-  let possibleAnswersArray: string[] = [];
-  try {
-    const response = await GET();
-    console.log(`Response body: ${response?.body}`);
-    const response1 = await response?.json();
-    console.log(`Response body: ${response1.body.imageUrl}`);
-    response2 = response1;
+export default function GameWindow() {
+  const [gameInfo, setGameInfo] = useState<GameImageAndAnswers>();
+  const [isAnswerGiven, setIsAnswerGiven] = useState(false);
 
-    const dir = "public\\images";
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getImageAndAnswers();
+      if (res) {
+        const resData = res?.data;
+        const resDataCopy = {
+          ...resData,
+          imageUrl: `http://${resData.imageUrl}`,
+        };
+        console.log(res);
+        setGameInfo(resDataCopy);
+      }
+    }
+    fetchData();
+  }, []);
 
-    // foldersArray = await getFilesArray(dir);
-    // const randomFromArrays = chooseRandomFromArrays(foldersArray, 4);
-    // console.log(`randomFromArrays: ${randomFromArrays}`);
-    // [correctAnswer, ...possibleAnswersArray] = randomFromArrays;
-    // console.log(`Correct Answer name: ${correctAnswer}`);
-    // console.log("Possible answers: ");
-    // possibleAnswersArray.forEach((answer) => console.log(answer));
-
-    // const randomFile = await chooseRandomFolder(dir + "\\" + correctAnswer);
-    // console.log(`Bird: ${randomFile}`);
-    // imageSrc = "/" + randomFile.replaceAll("\\", "/").substring(7); // get rid of /public
-    // correctAnswer = parseBirdName(imageSrc);
-    console.log(`Correct answer: ${correctAnswer}`);
-  } catch (err) {
-    console.error("Error occurred:", err);
-  }
   return (
-    <div>
-      <BirdPicture imageSrc={response2.body.imageUrl} />
-      <AnswerButtonWrapper
-        correctAnswer={parseBirdName(correctAnswer)}
-        answersForButtons={[
-          parseBirdName(correctAnswer),
-          ...possibleAnswersArray.map((name) => parseBirdName(name)),
-        ]}
-      ></AnswerButtonWrapper>
-    </div>
+    <>
+      {gameInfo ? (
+        <div>
+          <BirdPicture imageSrc={gameInfo.imageUrl} />
+          <AnswerButtonWrapper
+            correctAnswer={gameInfo.correctAnswer}
+            answersForButtons={gameInfo.answers}
+          ></AnswerButtonWrapper>
+        </div>
+      ) : (
+        <></>
+      )}
+      {/* {isAnswerGiven ? <Button onClick={fetchGameData}>Next</Button> : <></>} */}
+    </>
   );
-}
-
-function parseBirdName(imageFolderName: string) {
-  return imageFolderName
-    .substring(imageFolderName.lastIndexOf(".") + 1)
-    .split("_")
-    .join(" ");
 }

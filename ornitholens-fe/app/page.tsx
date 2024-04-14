@@ -63,7 +63,7 @@ export default function Home() {
           Start Birdwatching Now
         </a>
       </div>
-      <Image
+      {/* <Image
         src={
           "/images/001.Black_footed_Albatross/Black_Footed_Albatross_0001_796111.jpg"
         }
@@ -72,7 +72,25 @@ export default function Home() {
         height={0}
         sizes="100vw"
         style={{ width: "20%", height: "auto" }}
-      ></Image>
+      />
+      <Image
+        src={"http://localhost:8080/images/gul.jpg"}
+        alt="An image of a bird"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "20%", height: "auto" }}
+      /> */}
+      <Image
+        src={
+          "http://localhost:8080/images/094.White_breasted_Nuthatch/White_Breasted_Nuthatch_0096_86140.jpg"
+        }
+        alt="An image of a bird"
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{ width: "20%", height: "auto" }}
+      />
     </div>
   );
 }

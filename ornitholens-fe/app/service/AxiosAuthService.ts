@@ -3,6 +3,7 @@ import {
   ForumPost,
   ForumThread,
   ForumThreadWithoutPosts,
+  GameImageAndAnswers,
 } from "../types/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -165,5 +166,19 @@ export async function deleteForumPost(id: string, jwt: string) {
     return response;
   } catch (error) {
     console.error("Error occurred while trying to delete a post: " + error);
+  }
+}
+
+export async function getImageAndAnswers() {
+  try {
+    const response: AxiosResponse<GameImageAndAnswers> = await axios.get(
+      BASE_URL + "identify"
+    );
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to fetch image and answers for game: " +
+        error
+    );
   }
 }

@@ -6,7 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-import ConfirmationModal from "./ConfirmationModal";
+import ConfirmationModal from "./ForumPostDeleteConfirmationModal";
 import { useState } from "react";
 
 export default function ForumPostButtons({
@@ -21,12 +21,12 @@ export default function ForumPostButtons({
 
   return isContextLoggedIn && postOwnerEmail === extractJwtSubject(token) ? (
     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-      <Button>
-        <EditIcon />
-        Edit
-      </Button>
-      <Button onClick={() => setIsConfirmationModalOpen(true)}>
-        <DeleteIcon />
+      <Button startIcon={<EditIcon />}>Edit</Button>
+      <Button
+        onClick={() => setIsConfirmationModalOpen(true)}
+        startIcon={<DeleteIcon />}
+        sx={{ backgroundColor: "red", color: "white" }}
+      >
         Delete
       </Button>
       <ConfirmationModal

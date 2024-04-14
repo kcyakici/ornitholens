@@ -23,3 +23,9 @@ export type ForumThread = {
   title: string;
   time: string;
 };
+
+export type GameImageAndAnswers = {
+  imageUrl: string;
+  correctAnswer: string;
+  answers: string[];
+};

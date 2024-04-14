@@ -43,6 +43,10 @@ public class SecurityConfig {
                                 .requestMatchers("/register", "/authenticate").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/threads", "/threads/**").permitAll()
                                 .requestMatchers("/upload").permitAll() // TODO change access
+                                .requestMatchers("/bird").permitAll() // TODO change access
+                                .requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/resources/**").permitAll()
+                                .requestMatchers("/identify").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/threads").authenticated()
                                 .anyRequest().authenticated()
                 )
@@ -70,7 +74,8 @@ public class SecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("http://localhost:3000");
                 registry.addMapping("/api/**").allowedOrigins("http://localhost:3000");
-                registry.addMapping("/posts/**").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/posts/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "DELETE", "PUT", "POST");
+                registry.addMapping("/posts").allowedOrigins("http://localhost:3000").allowedMethods("GET", "DELETE", "PUT", "POST");
                 registry.addMapping("/upload").allowedOrigins("http://localhost:3000");
             }
         };
