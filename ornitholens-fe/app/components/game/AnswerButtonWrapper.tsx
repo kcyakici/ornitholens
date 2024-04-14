@@ -6,11 +6,13 @@ import AnswerButton from "./AnswerButton";
 type AnswerButtonWrapperProps = {
   correctAnswer: string;
   answersForButtons: string[];
+  handleGameWindowAnswerGiven(): void;
 };
 
 export default function AnswerButtonWrapper({
   correctAnswer,
   answersForButtons,
+  handleGameWindowAnswerGiven,
 }: AnswerButtonWrapperProps) {
   return (
     <Box sx={{ width: "100%" }}>
@@ -20,6 +22,7 @@ export default function AnswerButtonWrapper({
             <AnswerButton
               correctAnswer={correctAnswer}
               buttonDisplayAnswer={answer}
+              handleGameWindowAnswerGiven={handleGameWindowAnswerGiven}
             ></AnswerButton>
           </Grid>
         ))}

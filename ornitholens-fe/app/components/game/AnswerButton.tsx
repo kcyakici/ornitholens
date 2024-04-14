@@ -6,9 +6,11 @@ import { useState } from "react";
 export default function AnswerButton({
   correctAnswer,
   buttonDisplayAnswer,
+  handleGameWindowAnswerGiven,
 }: {
   correctAnswer: string;
   buttonDisplayAnswer: string;
+  handleGameWindowAnswerGiven(): void;
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const [buttonStyle, setButtonStyle] = useState({});
@@ -22,6 +24,7 @@ export default function AnswerButton({
       setButtonStyle(styleFalse);
     }
     setIsClicked(true);
+    handleGameWindowAnswerGiven();
   };
 
   return (
