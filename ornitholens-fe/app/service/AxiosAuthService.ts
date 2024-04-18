@@ -182,3 +182,23 @@ export async function getImageAndAnswers() {
     );
   }
 }
+
+export async function uploadImage(file: File) {
+  const formdata = new FormData();
+  formdata.append("imageFile", file);
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  try {
+    const response: AxiosResponse<GameImageAndAnswers> = await axios.post(
+      BASE_URL + "upload",
+      formdata,
+      config
+    );
+    return response;
+  } catch (error) {
+    console.error("Error occurred while trying to upload image: " + error);
+  }
+}

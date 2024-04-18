@@ -16,7 +16,7 @@ import java.io.File;
 @RestController
 public class BirdModelController {
 
-    private String UPLOAD_PATH; // TODO get relative path
+    private String UPLOAD_PATH = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\upload-trial\\"; // TODO get relative path
 
     @PostMapping("/upload")
     @CrossOrigin
