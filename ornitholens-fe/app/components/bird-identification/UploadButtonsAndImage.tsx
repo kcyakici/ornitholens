@@ -4,11 +4,13 @@ import UploadButtons from "./UploadButtons";
 import { uploadImage } from "@/app/service/AxiosAuthService";
 import BirdPicture from "../game/BirdPicture";
 import { Box } from "@mui/material";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function UploadButtonsAndImage() {
   const [photo, setPhoto] = useState<File>();
   const [filename, setFilename] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const { token } = useAuth();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) {
@@ -24,7 +26,7 @@ export default function UploadButtonsAndImage() {
 
   const handleUpload = () => {
     if (!photo) return;
-    uploadImage(photo);
+    uploadImage(photo, token);
   };
   return (
     <Box

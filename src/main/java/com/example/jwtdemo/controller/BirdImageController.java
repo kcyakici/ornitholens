@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @RestController
 public class BirdImageController {
     private final String PATH = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\upload-trial\\menekse.jpg";
-    private final String birdImagesDirectory = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\src\\main\\resources\\static\\images";
+    private final String birdImagesDirectory = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images";
     private final String HOST_URL_FOR_IMAGE = "localhost:8080\\images\\";
     private final List<String> directories = init();
     @GetMapping(value = "/bird", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
@@ -83,6 +83,8 @@ public class BirdImageController {
     }
 
     private List<String> getFileNames(String directory) {
+
+//        System.out.println("Bird images directory for game: " + birdImagesDirectory);
         try {
             Stream<Path> pathStream = Files.list(Paths.get(directory));
             return pathStream

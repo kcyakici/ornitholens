@@ -39,7 +39,7 @@ export default function UploadButtons({
           variant="contained"
           endIcon={<AddAPhotoIcon />}
         >
-          Upload
+          Choose an image
           <VisuallyHiddenInput
             type="file"
             accept="image/*"

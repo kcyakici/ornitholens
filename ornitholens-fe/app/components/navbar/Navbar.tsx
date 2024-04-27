@@ -49,15 +49,14 @@ export default function Navbar() {
             </Link>
             {isContextLoggedIn ? (
               <>
+                <Link href="/identify" passHref>
+                  <Button color="inherit">Identify</Button>
+                </Link>
+                <Link href="/Play" passHref>
+                  <Button color="inherit">Play</Button>
+                </Link>
                 <Button color="inherit" onClick={contextLogout}>
                   Logout
-                </Button>
-                <Button
-                  color="inherit"
-                  onClick={() => testAuthentication(token)}
-                >
-                  Hello Check
-                  {/* TODO: Remove */}
                 </Button>
               </>
             ) : (

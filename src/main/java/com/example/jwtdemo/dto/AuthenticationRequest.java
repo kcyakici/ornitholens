@@ -1,5 +1,6 @@
 package com.example.jwtdemo.dto;
 
+import lombok.NoArgsConstructor;
 import lombok.Value;
 
 @Value

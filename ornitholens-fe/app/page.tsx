@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { secondaryTheme } from "@/theme";
 
 export default function Home() {
   return (

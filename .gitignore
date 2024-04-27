@@ -46,3 +46,5 @@ sketch
 ornitholens-fe/public/images
 src/main/resources
 target/classes/static
+classification
+upload-trial

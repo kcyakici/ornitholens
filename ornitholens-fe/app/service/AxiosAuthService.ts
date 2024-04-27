@@ -183,12 +183,14 @@ export async function getImageAndAnswers() {
   }
 }
 
-export async function uploadImage(file: File) {
+export async function uploadImage(file: File, jwt: string) {
   const formdata = new FormData();
   formdata.append("imageFile", file);
+  const bearer_token = "Bearer " + jwt;
   const config = {
     headers: {
       "Content-Type": "multipart/form-data",
+      Authorization: bearer_token,
     },
   };
   try {

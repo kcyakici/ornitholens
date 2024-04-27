@@ -14,10 +14,10 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#6884ec",
+      main: "#a82be2",
     },
     secondary: {
-      main: "#eccf68",
+      main: "#65e22b",
     },
   },
 });
@@ -26,15 +26,15 @@ export default theme;
 
 export const secondaryTheme = {
   palette: {
-    primary: "#6884ec",
-    secondary: "#eccf68",
+    primary: "#a82be2",
+    complementary: "#65e22b",
     analogous: {
-      primary: "#68c6ec",
-      secondary: "#8d68ec",
+      primary: "#4d2be2",
+      secondary: "#e22bc0",
     },
-    tertiary: {
-      primary: "#cf68ec",
-      secondary: "#ec6884",
+    triadic: {
+      primary: "#e22b65",
+      secondary: "#e2a82b",
     },
   },
 };
