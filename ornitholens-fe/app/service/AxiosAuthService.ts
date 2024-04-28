@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import {
+  Bird,
   ForumPost,
   ForumThread,
   ForumThreadWithoutPosts,
@@ -202,5 +203,26 @@ export async function uploadImage(file: File, jwt: string) {
     return response;
   } catch (error) {
     console.error("Error occurred while trying to upload image: " + error);
+  }
+}
+
+export async function getAlbumImages(jwt: string) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response: AxiosResponse<Bird[]> = await axios.get(
+      BASE_URL + "albums",
+      config
+    );
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to retrieve the images in the album: " +
+        error
+    );
   }
 }

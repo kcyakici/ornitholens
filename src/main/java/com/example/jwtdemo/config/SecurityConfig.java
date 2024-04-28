@@ -2,6 +2,7 @@ package com.example.jwtdemo.config;
 
 import com.example.jwtdemo.filters.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+
+    @Value("${userAlbumEndpoint}")
+    private String userAlbumEndpoint;
 
     private final JwtRequestFilter jwtRequestFilter;
 
@@ -46,6 +50,8 @@ public class SecurityConfig {
                                 .requestMatchers("/bird").permitAll() // TODO change access
                                 .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/resources/**").permitAll()
+                                .requestMatchers("/" + userAlbumEndpoint + "/**").permitAll()
+                                .requestMatchers("/identify").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/threads").authenticated()
                                 .anyRequest().authenticated()
                 )
