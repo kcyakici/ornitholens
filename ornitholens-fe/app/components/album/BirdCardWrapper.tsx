@@ -7,8 +7,8 @@ import { useAuth } from "@/app/context/AuthContext";
 import { parseDateForum } from "@/app/utils/DateUtils";
 
 export default function BirdCardWrapper() {
-  const [birds, setBirds] = useState<Bird[]>();
   const { token } = useAuth();
+  const [birds, setBirds] = useState<Bird[]>();
 
   useEffect(() => {
     async function fetchData() {

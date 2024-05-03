@@ -82,6 +82,7 @@ public class SecurityConfig {
                 registry.addMapping("/posts/**").allowedOrigins("http://localhost:3000").allowedMethods("GET", "DELETE", "PUT", "POST");
                 registry.addMapping("/posts").allowedOrigins("http://localhost:3000").allowedMethods("GET", "DELETE", "PUT", "POST");
                 registry.addMapping("/upload").allowedOrigins("http://localhost:3000");
+                registry.addMapping("/score").allowedOrigins("http://localhost:3000");
             }
         };
     }

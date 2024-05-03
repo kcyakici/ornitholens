@@ -1,5 +1,6 @@
 package com.example.jwtdemo.service.jwt;
 
+import com.example.jwtdemo.dto.ForumMemberWithScoreDTO;
 import com.example.jwtdemo.entity.ForumMember;
 import com.example.jwtdemo.repository.ForumMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     public UserDetailsServiceImpl(ForumMemberRepository forumMemberRepository) {
         this.forumMemberRepository = forumMemberRepository;
+    }
+
+    public Integer getForumMemberScore(Long id) {
+        return forumMemberRepository.getScore(id);
+    }
+
+    public void updateScore(Long id, int newScore) {
+        forumMemberRepository.updateScore(id, newScore);
+    }
+
+    public void save(ForumMember forumMember) {
+        forumMemberRepository.save(forumMember);
     }
 
     public ForumMember findForumMemberByUsername(String email) {

@@ -36,3 +36,7 @@ export type GameImageAndAnswers = {
   correctAnswer: string;
   answers: string[];
 };
+
+export type UserScore = {
+  score: number;
+};

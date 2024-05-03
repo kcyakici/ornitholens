@@ -6,13 +6,15 @@ import AnswerButton from "./AnswerButton";
 type AnswerButtonWrapperProps = {
   correctAnswer: string;
   answersForButtons: string[];
-  handleGameWindowAnswerGiven(): void;
+  handleRightAnswer(message: string): void;
+  handleWrongAnswer(message: string): void;
 };
 
 export default function AnswerButtonWrapper({
   correctAnswer,
   answersForButtons,
-  handleGameWindowAnswerGiven,
+  handleRightAnswer,
+  handleWrongAnswer,
 }: AnswerButtonWrapperProps) {
   const [isButtonsDisabled, setIsButtonsDisabled] = useState(false);
 
@@ -29,7 +31,8 @@ export default function AnswerButtonWrapper({
               isButtonsDisabled={isButtonsDisabled}
               correctAnswer={correctAnswer}
               buttonDisplayAnswer={answer}
-              handleGameWindowAnswerGiven={handleGameWindowAnswerGiven}
+              handleRightAnswer={handleRightAnswer}
+              handleWrongAnswer={handleWrongAnswer}
               disableButtons={disableButtons}
             ></AnswerButton>
           </Grid>

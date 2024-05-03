@@ -18,13 +18,17 @@ public class ForumMember {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "score")
+    private int score;
+
     public ForumMember() {
     }
 
-    public ForumMember(String name, String email, String password) {
+    public ForumMember(String name, String email, String password, int score) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.score = score;
     }
 
     public Long getId() {
@@ -57,6 +61,14 @@ public class ForumMember {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     @Override

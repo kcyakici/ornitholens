@@ -5,6 +5,7 @@ import {
   ForumThread,
   ForumThreadWithoutPosts,
   GameImageAndAnswers,
+  UserScore,
 } from "../types/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -222,6 +223,43 @@ export async function getAlbumImages(jwt: string) {
   } catch (error) {
     console.error(
       "Error occurred while trying to retrieve the images in the album: " +
+        error
+    );
+  }
+}
+
+export async function updateUserScore(jwt: string, score: number) {
+  const data = { newScore: score };
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response = await axios.put(BASE_URL + "updateScore", data, config);
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to update the score of the user after a correct answer: " +
+        error
+    );
+  }
+}
+
+export async function getUserScore(jwt: string) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response = await axios.get(BASE_URL + "score", config);
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to update the score of the user after a correct answer: " +
         error
     );
   }
