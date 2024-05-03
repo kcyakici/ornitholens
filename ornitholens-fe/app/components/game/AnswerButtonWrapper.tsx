@@ -33,7 +33,7 @@ export default function AnswerButtonWrapper({
         alignItems="center" // Center items vertically
       >
         {answersForButtons.map((answer, index) => (
-          <Grid xs={6} key={index}>
+          <Grid xs={6} key={index} textAlign={"center"}>
             <AnswerButton
               isButtonsDisabled={isButtonsDisabled}
               correctAnswer={correctAnswer}

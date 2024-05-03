@@ -3,7 +3,7 @@ import BirdPicture from "./BirdPicture";
 import AnswerButtonWrapper from "./AnswerButtonWrapper";
 import { useEffect, useState } from "react";
 import { GameImageAndAnswers } from "@/app/types/types";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import {
   getImageAndAnswers,
   getUserScore,
@@ -75,18 +75,21 @@ export default function GameWindow() {
   }, [token]);
 
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        margin: "auto",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "60vw",
+      }}
+    >
       {gameInfo ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            margin: "auto",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "60vw",
-          }}
-        >
+        <>
+          <Typography variant="h3" color={"#65e22b"}>
+            Who is this bird?
+          </Typography>
           <BirdPicture imageSrc={gameInfo.imageUrl} />
           {isAnswerGiven ? `${congratsMessage}` : `${""}`}
           <div>Your score: {score}</div>
@@ -97,7 +100,7 @@ export default function GameWindow() {
             handleRightAnswer={handleRightAnswer}
             handleWrongAnswer={handleWrongAnswer}
           ></AnswerButtonWrapper>
-        </div>
+        </>
       ) : (
         <></>
       )}
@@ -106,6 +109,6 @@ export default function GameWindow() {
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 }
