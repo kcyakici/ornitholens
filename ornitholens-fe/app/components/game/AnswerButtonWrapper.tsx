@@ -24,7 +24,14 @@ export default function AnswerButtonWrapper({
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid
+        container
+        rowSpacing={1}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        alignContent="center"
+        justifyContent="center" // Center items horizontally
+        alignItems="center" // Center items vertically
+      >
         {answersForButtons.map((answer, index) => (
           <Grid xs={6} key={index}>
             <AnswerButton

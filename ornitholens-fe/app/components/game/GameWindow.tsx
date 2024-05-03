@@ -77,7 +77,16 @@ export default function GameWindow() {
   return (
     <>
       {gameInfo ? (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            margin: "auto",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "60vw",
+          }}
+        >
           <BirdPicture imageSrc={gameInfo.imageUrl} />
           {isAnswerGiven ? `${congratsMessage}` : `${""}`}
           <div>Your score: {score}</div>

@@ -11,7 +11,7 @@ export default function BirdPicture({ imageSrc }: { imageSrc: string }) {
         width={0}
         height={0}
         sizes="100vw"
-        style={{ width: "20%", height: "auto" }}
+        style={{ width: "100%", height: "auto" }}
       />
     </Box>
   );
