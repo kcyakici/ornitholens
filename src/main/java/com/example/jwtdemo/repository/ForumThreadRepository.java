@@ -24,7 +24,7 @@ public interface ForumThreadRepository extends JpaRepository<ForumThread, Long> 
     @Override
     ForumThread save(ForumThread forumThread);
 
-    @Query("SELECT new com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO(ft.id, ft.title, ft.time) FROM ForumThread ft")
+    @Query("SELECT new com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO(ft.id, ft.title, ft.time) FROM ForumThread ft ORDER BY ft.time DESC")
     List<ForumThreadWithoutPostsDTO> findForumThreadsExcludePosts();
     @Override
     List<ForumThread> findAll();

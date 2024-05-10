@@ -1,11 +1,18 @@
 package com.example.jwtdemo.controller;
 
+import com.example.jwtdemo.dto.AlbumResponseDTO;
 import com.example.jwtdemo.dto.IdentificationGameDTO;
+import com.example.jwtdemo.entity.ForumMember;
+import com.example.jwtdemo.service.BirdService;
+import com.example.jwtdemo.service.jwt.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +32,16 @@ import java.util.stream.Stream;
 @RestController
 public class BirdImageController {
     private final String PATH = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\upload-trial\\menekse.jpg";
-    private final String birdImagesDirectory = "G:\\CENG_PogChamp\\OrnithoLens\\spring-boot-rest-api-jwt\\src\\main\\resources\\static\\images";
+    private final String birdImagesDirectory = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images";
     private final String HOST_URL_FOR_IMAGE = "localhost:8080\\images\\";
     private final List<String> directories = init();
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final BirdService birdService;
+    @Autowired
+    public BirdImageController(UserDetailsServiceImpl userDetailsServiceImpl, BirdService birdService) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.birdService = birdService;
+    }
     @GetMapping(value = "/bird", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public ResponseEntity<Resource> getBirdImage() {
         ByteArrayResource resource = null;
@@ -57,6 +71,13 @@ public class BirdImageController {
         return new ResponseEntity<>(new IdentificationGameDTO(imageUrlToSend, correctAnswerParsed, randomAnswerListParsed), HttpStatus.OK);
     }
 
+    @GetMapping("/albums")
+    public ResponseEntity<List<AlbumResponseDTO>> getImagesInAlbum(@AuthenticationPrincipal User requestingUser) {
+        ForumMember forumMember = userDetailsServiceImpl.findForumMemberByUsername(requestingUser.getUsername());
+        List<AlbumResponseDTO> imageList = birdService.getImagesOfUserInAlbum(forumMember.getId());
+        return new ResponseEntity<>(imageList, HttpStatus.OK);
+    }
+
     private List<String> chooseRandomAnswers() {
         assert directories != null;
         List<String> randomAnswerList = new ArrayList<>();
@@ -83,6 +104,8 @@ public class BirdImageController {
     }
 
     private List<String> getFileNames(String directory) {
+
+//        System.out.println("Bird images directory for game: " + birdImagesDirectory);
         try {
             Stream<Path> pathStream = Files.list(Paths.get(directory));
             return pathStream

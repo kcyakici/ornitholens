@@ -24,8 +24,19 @@ export type ForumThread = {
   time: string;
 };
 
+export type Bird = {
+  id: number;
+  name: string;
+  time: string;
+  path: string;
+};
+
 export type GameImageAndAnswers = {
   imageUrl: string;
   correctAnswer: string;
   answers: string[];
+};
+
+export type UserScore = {
+  score: number;
 };

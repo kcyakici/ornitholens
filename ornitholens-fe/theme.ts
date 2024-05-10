@@ -14,27 +14,12 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#6884ec",
+      main: "#a82be2",
     },
     secondary: {
-      main: "#eccf68",
+      main: "#65e22b",
     },
   },
 });
 
 export default theme;
-
-export const secondaryTheme = {
-  palette: {
-    primary: "#6884ec",
-    secondary: "#eccf68",
-    analogous: {
-      primary: "#68c6ec",
-      secondary: "#8d68ec",
-    },
-    tertiary: {
-      primary: "#cf68ec",
-      secondary: "#ec6884",
-    },
-  },
-};

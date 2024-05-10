@@ -28,15 +28,6 @@ export default function Navbar() {
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Link href="/" passHref>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 OrnithoLens
@@ -49,15 +40,14 @@ export default function Navbar() {
             </Link>
             {isContextLoggedIn ? (
               <>
+                <Link href="/identify" passHref>
+                  <Button color="inherit">Identify</Button>
+                </Link>
+                <Link href="/play" passHref>
+                  <Button color="inherit">Play</Button>
+                </Link>
                 <Button color="inherit" onClick={contextLogout}>
                   Logout
-                </Button>
-                <Button
-                  color="inherit"
-                  onClick={() => testAuthentication(token)}
-                >
-                  Hello Check
-                  {/* TODO: Remove */}
                 </Button>
               </>
             ) : (

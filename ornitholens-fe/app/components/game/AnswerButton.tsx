@@ -6,22 +6,35 @@ import { useState } from "react";
 export default function AnswerButton({
   correctAnswer,
   buttonDisplayAnswer,
+  isButtonsDisabled,
+  disableButtons,
+  handleRightAnswer,
+  handleWrongAnswer,
 }: {
   correctAnswer: string;
   buttonDisplayAnswer: string;
+  isButtonsDisabled: boolean;
+  disableButtons(): void;
+  handleRightAnswer(message: string): void;
+  handleWrongAnswer(message: string): void;
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const [buttonStyle, setButtonStyle] = useState({});
 
   const handleClick = () => {
-    if (isClicked) return;
+    if (isClicked || isButtonsDisabled) return;
+
+    const userMessage = `The correct answer was ${correctAnswer}`;
 
     if (correctAnswer === buttonDisplayAnswer) {
+      handleRightAnswer("Congratulations! " + userMessage);
       setButtonStyle(styleCorrect);
     } else {
+      handleWrongAnswer("Sorry! " + userMessage);
       setButtonStyle(styleFalse);
     }
     setIsClicked(true);
+    disableButtons();
   };
 
   return (

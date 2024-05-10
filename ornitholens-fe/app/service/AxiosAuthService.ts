@@ -1,9 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import {
+  Bird,
   ForumPost,
   ForumThread,
   ForumThreadWithoutPosts,
   GameImageAndAnswers,
+  UserScore,
 } from "../types/types";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -178,6 +180,86 @@ export async function getImageAndAnswers() {
   } catch (error) {
     console.error(
       "Error occurred while trying to fetch image and answers for game: " +
+        error
+    );
+  }
+}
+
+export async function uploadImage(file: File, jwt: string) {
+  const formdata = new FormData();
+  formdata.append("imageFile", file);
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response: AxiosResponse<GameImageAndAnswers> = await axios.post(
+      BASE_URL + "upload",
+      formdata,
+      config
+    );
+    return response;
+  } catch (error) {
+    console.error("Error occurred while trying to upload image: " + error);
+  }
+}
+
+export async function getAlbumImages(jwt: string) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response: AxiosResponse<Bird[]> = await axios.get(
+      BASE_URL + "albums",
+      config
+    );
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to retrieve the images in the album: " +
+        error
+    );
+  }
+}
+
+export async function updateUserScore(jwt: string, score: number) {
+  const data = { newScore: score };
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response = await axios.put(BASE_URL + "updateScore", data, config);
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to update the score of the user after a correct answer: " +
+        error
+    );
+  }
+}
+
+export async function getUserScore(jwt: string) {
+  const bearer_token = "Bearer " + jwt;
+  const config = {
+    headers: {
+      Authorization: bearer_token,
+    },
+  };
+  try {
+    const response = await axios.get(BASE_URL + "score", config);
+    return response;
+  } catch (error) {
+    console.error(
+      "Error occurred while trying to update the score of the user after a correct answer: " +
         error
     );
   }
