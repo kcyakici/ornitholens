@@ -4,17 +4,17 @@ import ForumThreadCard from "./ForumThreadCard";
 import { ForumThreadWithoutPosts } from "@/app/types/types";
 import { PostCreationButton } from "./PostCreationButton";
 import { getForumThreads } from "@/app/service/AxiosAuthService";
+import { parseDateForum } from "@/app/utils/DateUtils";
 
 export async function ThreadsContainer() {
   const forumThreadsResponse = await getForumThreads();
   const { data: forumThreads } = forumThreadsResponse;
   const lastReplied = "3 hours ago";
   const openedBy = "User 1";
-  const openedTime = "1 day ago";
 
   return (
     <Grid container justifyItems="end" justifyContent="center" spacing={2}>
-      <Grid item xs={12} md={8}>
+      <Grid item xs={12} md={8} textAlign={"end"}>
         <PostCreationButton />
       </Grid>
       {forumThreads.map((thread: ForumThreadWithoutPosts) => (
@@ -24,7 +24,7 @@ export async function ThreadsContainer() {
             title={thread.title}
             lastReplied={lastReplied}
             openedBy={openedBy}
-            openedTime={openedTime}
+            openedTime={parseDateForum(thread.time)}
           />
         </Grid>
       ))}
