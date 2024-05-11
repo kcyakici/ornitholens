@@ -60,9 +60,7 @@ export default function LoginModal({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>
-          Join OrnithoLens Today
-        </h1>
+        <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>Login!</h1>
         <TextField
           required
           fullWidth
