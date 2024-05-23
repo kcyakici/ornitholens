@@ -29,7 +29,9 @@ type RegisterRequest = {
 export function loginHandler(
   email: string,
   password: string,
-  contextLogin: (jwt: string) => void
+  contextLogin: (jwt: string) => void,
+  onSuccess: () => void,
+  onError: () => void
 ) {
   try {
     axios
@@ -39,9 +41,11 @@ export function loginHandler(
         const { jwt } = response.data;
         console.log("JWT returned from login: " + jwt);
         contextLogin(jwt);
+        onSuccess();
       })
       .catch(function (error) {
         console.log(error);
+        onError();
       });
   } catch (error) {
     // Handle login failure or any other errors
@@ -49,11 +53,11 @@ export function loginHandler(
   }
 }
 
-export function registerHandler({
-  username,
-  email,
-  password,
-}: RegisterRequest) {
+export function registerHandler(
+  { username, email, password }: RegisterRequest,
+  onSuccess: () => void,
+  onError: () => void
+) {
   axios
     .post(BASE_URL + "register", {
       name: username,
@@ -62,10 +66,12 @@ export function registerHandler({
     })
     .then((response) => {
       console.log("Form submitted successfully:", response.data);
+      onSuccess();
       // Optionally, you can perform actions after successful form submission
     })
     .catch((error) => {
       console.error("Error submitting form:", error);
+      onError();
       // Optionally, you can handle errors from the server
     });
 }

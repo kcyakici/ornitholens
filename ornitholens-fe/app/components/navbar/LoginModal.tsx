@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import { loginHandler } from "@/app/service/AxiosAuthService";
 import { useAuth } from "@/app/context/AuthContext";
+import CustomSnackBar from "../CustomSnackBar";
 
 export const style = {
   position: "absolute" as "absolute",
@@ -31,7 +32,17 @@ export default function LoginModal({
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isEmailError, setEmailError] = React.useState(true);
+  const [isLoginError, setIsLoginError] = React.useState(false);
+  const [isLoginSuccess, setIsLoginSuccess] = React.useState(false);
   const { contextLogin } = useAuth();
+
+  const handleLoginErrorAlertClose = () => {
+    setIsLoginError(false);
+  };
+
+  const handleLoginSuccessAlertClose = () => {
+    setIsLoginSuccess(false);
+  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -45,7 +56,13 @@ export default function LoginModal({
 
   const handleSubmit = async () => {
     try {
-      loginHandler(email, password, contextLogin);
+      loginHandler(
+        email,
+        password,
+        contextLogin,
+        () => setIsLoginSuccess(true),
+        () => setIsLoginError(true)
+      );
       console.log("Login successful");
     } catch (error: any) {
       console.error("Error logging in:", error.message);
@@ -53,44 +70,60 @@ export default function LoginModal({
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>Login!</h1>
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          id="outlined-required"
-          label="Email"
-          value={email}
-          onChange={handleEmailChange}
-          error={isEmailError}
-        />
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          fullWidth
-        >
-          Login
-        </Button>
-      </Box>
-    </Modal>
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>Login!</h1>
+          <TextField
+            required
+            fullWidth
+            margin="normal"
+            id="outlined-required"
+            label="Email"
+            value={email}
+            onChange={handleEmailChange}
+            error={isEmailError}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="normal"
+            id="outlined-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            fullWidth
+          >
+            Login
+          </Button>
+        </Box>
+      </Modal>
+      <CustomSnackBar
+        open={isLoginError}
+        message={"Couldn't login. Please try again!"}
+        autoHideDuration={3000}
+        handleClose={handleLoginErrorAlertClose}
+        severity={"error"}
+      />
+      <CustomSnackBar
+        open={isLoginSuccess}
+        message={"Login successful!"}
+        autoHideDuration={3000}
+        handleClose={handleLoginSuccessAlertClose}
+        severity={"success"}
+      />
+    </>
   );
 }

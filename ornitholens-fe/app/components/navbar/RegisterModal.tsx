@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import isEmailValid from "@/app/utils/IsEmailValid";
 import { registerHandler } from "@/app/service/AxiosAuthService";
+import CustomSnackBar from "../CustomSnackBar";
 
 const style = {
   position: "absolute" as "absolute",
@@ -31,6 +32,16 @@ export default function RegisterModal({
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isEmailError, setEmailError] = React.useState(true);
+  const [isRegisterError, setIsRegisterError] = React.useState(false);
+  const [isRegisterSuccess, setIsRegisterSuccess] = React.useState(false);
+
+  const handleRegisterErrorAlertClose = () => {
+    setIsRegisterError(false);
+  };
+
+  const handleRegisterSuccessAlertClose = () => {
+    setIsRegisterSuccess(false);
+  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -48,62 +59,82 @@ export default function RegisterModal({
 
   const handleSubmit = () => {
     if (!isEmailError) {
-      registerHandler({ username, email, password });
+      registerHandler(
+        { username, email, password },
+        () => setIsRegisterSuccess(true),
+        () => setIsRegisterError(true)
+      );
     } else {
       console.log("Invalid form data");
     }
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>
-          Join OrnithoLens Today
-        </h1>
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          id="outlined-required"
-          label="Username"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          id="outlined-required"
-          label="Email"
-          value={email}
-          onChange={handleEmailChange}
-          error={isEmailError}
-        />
-        <TextField
-          required
-          fullWidth
-          margin="normal"
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
-          fullWidth
-        >
-          Register
-        </Button>
-      </Box>
-    </Modal>
+    <>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <h1 style={{ fontSize: "1.8em", marginBottom: 16 }}>
+            Join OrnithoLens Today
+          </h1>
+          <TextField
+            required
+            fullWidth
+            margin="normal"
+            id="outlined-required"
+            label="Username"
+            value={username}
+            onChange={handleUsernameChange}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="normal"
+            id="outlined-required"
+            label="Email"
+            value={email}
+            onChange={handleEmailChange}
+            error={isEmailError}
+          />
+          <TextField
+            required
+            fullWidth
+            margin="normal"
+            id="outlined-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            fullWidth
+          >
+            Register
+          </Button>
+        </Box>
+      </Modal>
+      <CustomSnackBar
+        open={isRegisterError}
+        message={"Could not register! Try again!"}
+        autoHideDuration={3000}
+        handleClose={handleRegisterErrorAlertClose}
+        severity={"error"}
+      />
+      <CustomSnackBar
+        open={isRegisterSuccess}
+        message={"Register Successful"}
+        autoHideDuration={3000}
+        handleClose={handleRegisterSuccessAlertClose}
+        severity={"success"}
+      />
+    </>
   );
 }

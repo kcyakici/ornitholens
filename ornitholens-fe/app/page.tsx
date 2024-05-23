@@ -1,13 +1,9 @@
 import Image from "next/image";
-import { secondaryTheme } from "@/_theme";
 
 export default function Home() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1
-        className="text-4xl font-bold mb-4"
-        style={{ color: secondaryTheme.palette.complementary }}
-      >
+      <h1 className="text-4xl font-bold mb-4 text-complementary">
         Welcome to OrnithoLens!
       </h1>
       <p className="text-lg text-gray-700 mb-8">
@@ -17,10 +13,7 @@ export default function Home() {
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
         <div className="md:w-1/2 md:mr-4 mb-4 md:mb-0">
-          <h2
-            className="text-2xl font-semibold mb-2"
-            style={{ color: secondaryTheme.palette.triadic.secondary }}
-          >
+          <h2 className="text-2xl font-semibold mb-2 text-triadic-secondary">
             Create an Account, Login, and Start Exploring
           </h2>
           <p className="text-lg text-gray-700 mb-4">
@@ -32,10 +25,7 @@ export default function Home() {
         </div>
 
         <div className="md:w-1/2 md:ml-4">
-          <h2
-            className="text-2xl font-semibold mb-2"
-            style={{ color: secondaryTheme.palette.triadic.secondary }}
-          >
+          <h2 className="text-2xl font-semibold mb-2 text-triadic-secondary">
             Participate in the Forum with Fellow Bird Enthusiasts
           </h2>
           <p className="text-lg text-gray-700 mb-4">
@@ -48,10 +38,7 @@ export default function Home() {
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
         <div className="md:w-1/2 md:mr-4 mb-4 md:mb-0">
-          <h2
-            className="text-2xl font-semibold mb-2"
-            style={{ color: secondaryTheme.palette.triadic.secondary }}
-          >
+          <h2 className="text-2xl font-semibold mb-2 text-triadic-secondary">
             Play the Bird Guessing Minigame
           </h2>
           <p className="text-lg text-gray-700 mb-4">
@@ -63,10 +50,7 @@ export default function Home() {
         </div>
 
         <div className="md:w-1/2 md:ml-4">
-          <h2
-            className="text-2xl font-semibold mb-2"
-            style={{ color: secondaryTheme.palette.triadic.secondary }}
-          >
+          <h2 className="text-2xl font-semibold mb-2 text-triadic-secondary">
             Identify and Create Your Personal Album with the Help of AI
           </h2>
           <p className="text-lg text-gray-700 mb-4">
