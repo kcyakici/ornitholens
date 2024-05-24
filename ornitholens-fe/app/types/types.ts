@@ -40,3 +40,7 @@ export type GameImageAndAnswers = {
 export type UserScore = {
   score: number;
 };
+
+export type IdentificationResponse = {
+  classname: string;
+};

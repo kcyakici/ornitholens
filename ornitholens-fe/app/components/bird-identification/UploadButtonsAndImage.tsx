@@ -6,10 +6,19 @@ import BirdPicture from "../game/BirdPicture";
 import { Box } from "@mui/material";
 import { useAuth } from "@/app/context/AuthContext";
 
-export default function UploadButtonsAndImage() {
+export default function UploadButtonsAndImage({
+  imageUrl,
+  setImageUrl,
+  setBirdName,
+  setIsIdentificationRunning,
+}: {
+  imageUrl: string;
+  setImageUrl(url: string): void;
+  setBirdName(birdName: string): void;
+  setIsIdentificationRunning(isRunning: boolean): void;
+}) {
   const [photo, setPhoto] = useState<File>();
   const [filename, setFilename] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const { token } = useAuth();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,9 +33,16 @@ export default function UploadButtonsAndImage() {
     setFilename(name);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!photo) return;
-    uploadImage(photo, token);
+
+    setIsIdentificationRunning(true);
+    const response = await uploadImage(photo, token);
+    if (response) {
+      console.log("Got response: " + response.data);
+      const { data } = response;
+      setBirdName(data.classname);
+    }
   };
   return (
     <Box

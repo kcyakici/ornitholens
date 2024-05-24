@@ -64,7 +64,7 @@ public class BirdModelController {
 
         Bird bird = new Bird(response.classname(), "", LocalDateTime.now(), forumMember);
         Bird savedBird = birdService.save(bird, multipartFile);
-
+        System.out.println("Class: " + response.classname());
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

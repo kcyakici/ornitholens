@@ -5,6 +5,7 @@ import {
   ForumThread,
   ForumThreadWithoutPosts,
   GameImageAndAnswers,
+  IdentificationResponse,
   UserScore,
 } from "../types/types";
 import { revalidatePath } from "next/cache";
@@ -202,7 +203,7 @@ export async function uploadImage(file: File, jwt: string) {
     },
   };
   try {
-    const response: AxiosResponse<GameImageAndAnswers> = await axios.post(
+    const response: AxiosResponse<IdentificationResponse> = await axios.post(
       BASE_URL + "upload",
       formdata,
       config

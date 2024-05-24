@@ -1,5 +1,6 @@
 import { Divider, Typography } from "@mui/material";
 import UploadButtonsAndImage from "../components/bird-identification/UploadButtonsAndImage";
+import ParentBoxForIdentificationAndResult from "../components/bird-identification/ParentBoxForIdentificationAndResult";
 
 export default function IdentifyPage() {
   return (
@@ -29,7 +30,7 @@ export default function IdentifyPage() {
         </Typography>
         <Divider variant="middle" />
       </div>
-      <UploadButtonsAndImage />
+      <ParentBoxForIdentificationAndResult />
     </div>
   );
 }
