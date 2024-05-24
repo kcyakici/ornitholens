@@ -2,13 +2,42 @@
 
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
+import CustomSnackBar from "../CustomSnackBar";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function PasswordChangeBox() {
+  const { token } = useAuth();
   const [oldPassword, setOldPassword] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [newPasswordTwo, setNewPasswordTwo] = useState<string>("");
   const [isPasswordConfirmationError, setIsPasswordConfirmationError] =
     useState<boolean>(false);
+  const [isPasswordChangeError, setIsPasswordChangeError] = useState(false);
+  const [isPasswordChangeSuccess, setIsPasswordChangeSuccess] = useState(false);
+
+  async function handleSubmit() {
+    const response = await fetch("http://localhost:8080/changePassword", {
+      method: "POST",
+      body: JSON.stringify({ oldPassword, newPassword }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      setIsPasswordChangeSuccess(true);
+    } else {
+      setIsPasswordChangeError(true);
+    }
+  }
+
+  const handlePasswordChangeErrorAlertClose = () => {
+    setIsPasswordChangeError(false);
+  };
+
+  const handlePasswordChangeSuccessAlertClose = () => {
+    setIsPasswordChangeSuccess(false);
+  };
 
   const handleOldPasswordChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -31,8 +60,6 @@ export default function PasswordChangeBox() {
     setNewPasswordTwo(newValue);
     setIsPasswordConfirmationError(newValue !== newPassword);
   };
-
-  const handleSubmit = () => {};
 
   return (
     <>
@@ -82,6 +109,20 @@ export default function PasswordChangeBox() {
           Save
         </Button>
       </div>
+      <CustomSnackBar
+        open={isPasswordChangeError}
+        message={"Couldn't change the password. Please try again!"}
+        autoHideDuration={3000}
+        handleClose={handlePasswordChangeErrorAlertClose}
+        severity={"error"}
+      />
+      <CustomSnackBar
+        open={isPasswordChangeSuccess}
+        message={"Password changed successfully!"}
+        autoHideDuration={3000}
+        handleClose={handlePasswordChangeSuccessAlertClose}
+        severity={"success"}
+      />
     </>
   );
 }
