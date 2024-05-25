@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +30,9 @@ public interface ForumThreadRepository extends JpaRepository<ForumThread, Long> 
     @Override
     List<ForumThread> findAll();
 
+    @Query("SELECT MAX(fp.time) FROM ForumThread ft INNER JOIN ft.forumPostList fp WHERE ft.id = ?1")
+    LocalDateTime findLastPostTimeByThreadId(Long threadId);
 
+    @Query("SELECT fm.name FROM ForumThread ft INNER JOIN ft.forumPostList fp INNER JOIN fp.forumMember fm WHERE ft.id = ?1 ORDER BY fp.time ASC LIMIT 1")
+    String findOwnerOfForumThread(Long threadId);
 }

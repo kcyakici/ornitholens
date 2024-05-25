@@ -2,6 +2,7 @@ package com.example.jwtdemo.controller;
 
 import com.example.jwtdemo.dto.ForumMemberWithScoreDTO;
 import com.example.jwtdemo.dto.ScoreUpdateRequest;
+import com.example.jwtdemo.dto.UserProfileInfo;
 import com.example.jwtdemo.entity.ForumMember;
 import com.example.jwtdemo.entity.Rank;
 import com.example.jwtdemo.service.RankService;
@@ -21,6 +22,14 @@ public class ForumMemberController {
     public ForumMemberController(UserDetailsServiceImpl userDetailsService, RankService rankService) {
         this.userDetailsService = userDetailsService;
         this.rankService = rankService;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserProfileInfo> getUserInfo(@AuthenticationPrincipal User requestingUser) {
+        ForumMember forumMember = userDetailsService.findForumMemberByUsername(requestingUser.getUsername());
+        Rank rank = rankService.findRankByScore(forumMember.getScore());
+        return ResponseEntity.ok(new UserProfileInfo(forumMember.getName(), forumMember.getEmail(), rank.getRankName(), forumMember.getScore()));
+
     }
 
     @GetMapping("/score")

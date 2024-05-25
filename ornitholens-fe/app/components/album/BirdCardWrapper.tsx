@@ -33,7 +33,6 @@ export default function BirdCardWrapper() {
       style={{
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "space-between",
         alignContent: "flex-start",
         gap: "50px 50px",
         width: "60vw",

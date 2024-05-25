@@ -24,7 +24,30 @@ type UserPostProps = {
 };
 
 const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
-  // const theme = useTheme();
+  const renderContentWithClickableLinks = (content: string) => {
+    // Regular expression to match URLs
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return content.split(urlRegex).map((part, index) => {
+      if (part.match(urlRegex)) {
+        // If part is a URL, render it as a clickable link
+        return (
+          <a
+            key={index}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "blue", textDecoration: "underline" }}
+          >
+            {part}
+          </a>
+        );
+      } else {
+        // Otherwise, render part as plain text
+        return <span key={index}>{part}</span>;
+      }
+    });
+  };
+
   return (
     <Card
       sx={{ margin: "10px 200px" }}
@@ -45,10 +68,12 @@ const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
             {forumMember.name}
           </Typography>
         </div>
-        <Typography variant="body2" color="textSecondary" gutterBottom>
+        <Typography variant="body1" component="div">
           Posted at: {parseDateForum(postedAt)}
         </Typography>
-        <Typography variant="body1">{content}</Typography>
+        <Typography variant="body1">
+          {renderContentWithClickableLinks(content)}
+        </Typography>
       </CardContent>
       <ForumPostButtons postOwnerEmail={forumMember.email} id={id} />
     </Card>

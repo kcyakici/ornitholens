@@ -5,6 +5,13 @@ export type ForumPost = {
   id: string;
 };
 
+export type User = {
+  name: string;
+  email: string;
+  score: number;
+  rank: string;
+};
+
 export type ForumThreadWithoutPosts = {
   id: string;
   title: string;

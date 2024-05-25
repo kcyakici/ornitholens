@@ -9,8 +9,6 @@ import { parseDateForum } from "@/app/utils/DateUtils";
 export async function ThreadsContainer() {
   const forumThreadsResponse = await getForumThreads();
   const { data: forumThreads } = forumThreadsResponse;
-  const lastReplied = "3 hours ago";
-  const openedBy = "User 1";
 
   return (
     <Grid container justifyItems="end" justifyContent="center" spacing={2}>
@@ -22,8 +20,6 @@ export async function ThreadsContainer() {
           <ForumThreadCard
             threadId={thread.id}
             title={thread.title}
-            lastReplied={lastReplied}
-            openedBy={openedBy}
             openedTime={parseDateForum(thread.time)}
           />
         </Grid>

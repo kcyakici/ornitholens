@@ -1,22 +1,30 @@
 import React from "react";
 import { Card, CardContent, Typography, Avatar, Grid } from "@mui/material";
 import Link from "next/link";
+import { parseDateForum } from "@/app/utils/DateUtils";
 
 type ForumThreadCardProps = {
   threadId: string;
   title: string;
-  lastReplied: string;
-  openedBy: string;
   openedTime: string;
 };
 
-const ForumThreadCard = ({
+const ForumThreadCard = async ({
   threadId,
   title,
-  lastReplied,
-  openedBy,
   openedTime,
 }: ForumThreadCardProps) => {
+  const [lastRepliedTimeResponse, openedByResponse] = await Promise.all([
+    fetch(`http://localhost:8080/threads/${threadId}/lastPostTime`),
+    fetch(`http://localhost:8080/threads/${threadId}/owner`),
+  ]);
+
+  const lastRepliedTime = (await lastRepliedTimeResponse.text()).replaceAll(
+    '"',
+    ""
+  );
+  const openedBy = await openedByResponse.text();
+
   return (
     <Card
       sx={{
@@ -36,7 +44,7 @@ const ForumThreadCard = ({
           </Typography>
         </Link>
         <Typography variant="body2" color="textSecondary" gutterBottom>
-          Last replied: {lastReplied}
+          Last replied: {parseDateForum(lastRepliedTime)}
         </Typography>
         <Grid container alignItems="center" spacing={2}>
           <Grid item>

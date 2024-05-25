@@ -7,7 +7,6 @@ import com.example.jwtdemo.dto.ForumThreadWithoutPostsDTO;
 import com.example.jwtdemo.entity.ForumThread;
 import com.example.jwtdemo.entity.ForumMember;
 import com.example.jwtdemo.entity.ForumPost;
-import com.example.jwtdemo.exception.InvalidIdException;
 import com.example.jwtdemo.service.ForumPostService;
 import com.example.jwtdemo.service.ForumThreadService;
 import com.example.jwtdemo.service.jwt.UserDetailsServiceImpl;
@@ -27,11 +26,13 @@ import static com.example.jwtdemo.utils.ConversionUtil.convertToLong;
 public class ForumThreadController {
     private final ForumThreadService forumThreadService;
     private final UserDetailsServiceImpl userDetailsServiceImpl;
+    private final ForumPostService forumPostService;
 
     @Autowired
-    public ForumThreadController(ForumThreadService forumThreadService, UserDetailsServiceImpl userDetailsServiceImpl) {
+    public ForumThreadController(ForumThreadService forumThreadService, UserDetailsServiceImpl userDetailsServiceImpl, ForumPostService forumPostService) {
         this.forumThreadService = forumThreadService;
         this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.forumPostService = forumPostService;
     }
 
     @GetMapping("/threads/{threadId}")
@@ -82,5 +83,15 @@ public class ForumThreadController {
         ForumThread createdForumThread = forumThreadService.saveForumThread(forumThread);
         System.out.println("Created forum thread: " + createdForumThread);
         return new ResponseEntity<ForumThread>(createdForumThread, HttpStatus.CREATED);
+    }
+
+    @GetMapping("threads/{threadId}/lastPostTime")
+    public ResponseEntity<LocalDateTime> getLastPostTime(@PathVariable Long threadId) {
+        return ResponseEntity.ok(forumThreadService.getLastPostTime(threadId));
+    }
+
+    @GetMapping("threads/{threadId}/owner")
+    public ResponseEntity<String> getOwner(@PathVariable Long threadId) {
+        return ResponseEntity.ok(forumThreadService.getOwner(threadId));
     }
 }

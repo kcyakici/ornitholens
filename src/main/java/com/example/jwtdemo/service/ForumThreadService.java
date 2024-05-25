@@ -9,6 +9,7 @@ import com.example.jwtdemo.repository.ForumThreadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +55,13 @@ public class ForumThreadService {
         ForumThread savedForumThread = forumThreadRepository.save(forumThread); // TODO don't return user details like password
         System.out.println("Forum thread saved: " + savedForumThread); // TODO delete
         return savedForumThread;
+    }
+
+    public LocalDateTime getLastPostTime(Long threadId) {
+        return forumThreadRepository.findLastPostTimeByThreadId(threadId);
+    }
+
+    public String getOwner(Long threadId) {
+        return forumThreadRepository.findOwnerOfForumThread(threadId);
     }
 }
