@@ -46,5 +46,5 @@ sketch
 ornitholens-fe/public/images
 src/main/resources
 target/classes/static
-classification
+classification/model.h5
 upload-trial

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { postForumThread } from "@/app/service/AxiosAuthService";
 import { useAuth } from "@/app/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 const PostThreadPage: React.FC = () => {
   const [threadTitle, setThreadTitle] = useState("");
@@ -27,6 +28,7 @@ const PostThreadPage: React.FC = () => {
     try {
       const response = await postForumThread(token, threadTitle, threadContent);
       router.push(`/community/thread/${response.data.id}`);
+      router.refresh();
     } catch (error) {
       console.error("Error while trying to create the thread: " + error);
     } finally {

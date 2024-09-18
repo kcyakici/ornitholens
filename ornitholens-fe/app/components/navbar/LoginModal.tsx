@@ -36,6 +36,11 @@ export default function LoginModal({
   const [isLoginSuccess, setIsLoginSuccess] = React.useState(false);
   const { contextLogin } = useAuth();
 
+  const resetFields = () => {
+    setEmail("");
+    setPassword("");
+  };
+
   const handleLoginErrorAlertClose = () => {
     setIsLoginError(false);
   };
@@ -60,7 +65,11 @@ export default function LoginModal({
         email,
         password,
         contextLogin,
-        () => setIsLoginSuccess(true),
+        () => {
+          setIsLoginSuccess(true);
+          resetFields();
+          handleClose();
+        },
         () => setIsLoginError(true)
       );
       console.log("Login successful");

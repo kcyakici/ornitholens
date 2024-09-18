@@ -71,7 +71,7 @@ const UserPost = ({ forumMember, postedAt, content, id }: UserPostProps) => {
         <Typography variant="body1" component="div">
           Posted at: {parseDateForum(postedAt)}
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ marginTop: 3 }}>
           {renderContentWithClickableLinks(content)}
         </Typography>
       </CardContent>

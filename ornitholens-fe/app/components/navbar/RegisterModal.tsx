@@ -35,6 +35,12 @@ export default function RegisterModal({
   const [isRegisterError, setIsRegisterError] = React.useState(false);
   const [isRegisterSuccess, setIsRegisterSuccess] = React.useState(false);
 
+  const resetFields = () => {
+    setEmail("");
+    setPassword("");
+    setUserName("");
+  };
+
   const handleRegisterErrorAlertClose = () => {
     setIsRegisterError(false);
   };
@@ -61,7 +67,11 @@ export default function RegisterModal({
     if (!isEmailError) {
       registerHandler(
         { username, email, password },
-        () => setIsRegisterSuccess(true),
+        () => {
+          setIsRegisterSuccess(true);
+          resetFields();
+          handleClose();
+        },
         () => setIsRegisterError(true)
       );
     } else {
